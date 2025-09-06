@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>겜블 100% 즐기기 — 랜딩</title>
+  <meta name="description" content="CITY156 / CP10 랜딩 스타터">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html,body{font-family: Pretendard, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Apple SD Gothic Neo, Malgun Gothic, sans-serif;}
+    .glass{backdrop-filter: blur(14px); background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.4);}
+    .shadow-soft{box-shadow: 0 10px 30px rgba(0,0,0,.08);}
+    .card{border-radius:1.25rem;}
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="./assets/images/BIKYOLOGO.png" class="h-10 w-auto" alt="BIKYO LOGO" onerror="this.style.display='none'">
+        <span class="text-xl font-semibold tracking-tight">겜블 100% 즐기기</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#about" class="hover:opacity-80">About</a>
+        <a href="#events" class="hover:opacity-80">이벤트</a>
+        <a href="#compare" class="hover:opacity-80">비교 아카데미</a>
+        <a href="#contact" class="hover:opacity-80">문의</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative">
+    <div class="absolute inset-0">
+      <img src="./assets/images/메인슬라이더.png" class="w-full h-[52vh] object-cover" alt="메인 슬라이더" onerror="this.style.display='none'">
+      <div class="absolute inset-0 bg-gradient-to-b from-white/10 to-white"></div>
+    </div>
+    <div class="relative max-w-6xl mx-auto px-4 pt-16 pb-10">
+      <div class="glass card shadow-soft p-8 md:p-10">
+        <h1 class="text-3xl md:text-4xl font-bold leading-tight">CITY156 / CP10 전용 랜딩 스타터</h1>
+        <p class="mt-3 text-gray-700">화이트 베이스 + 하이엔드 글래스 톤. GitHub Pages 자동배포 워크플로우 내장.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#events" class="px-5 py-3 rounded-2xl bg-black text-white hover:opacity-90">신입 쿠폰 신청</a>
+          <a href="#compare" class="px-5 py-3 rounded-2xl border hover:bg-black hover:text-white transition">이벤트 비교 보기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sections -->
+  <main class="max-w-6xl mx-auto px-4 space-y-12 pb-16">
+    <section id="about" class="mt-2">
+      <h2 class="text-2xl font-semibold">About</h2>
+      <div class="mt-4 grid md:grid-cols-2 gap-6">
+        <div class="glass card p-6 shadow-soft">
+          <p class="text-gray-700">이 스타터는 GitHub Pages로 자동 배포되는 정적 사이트 템플릿입니다. Tailwind CDN을 사용하며, 섹션/카드/히어로/CTA가 포함되어 있습니다.</p>
+        </div>
+        <img src="./assets/images/레이아웃 구성.png" class="rounded-2xl shadow-soft" alt="레이아웃 구성" onerror="this.style.display='none'">
+      </div>
+    </section>
+
+    <section id="events">
+      <h2 class="text-2xl font-semibold">이벤트</h2>
+      <div class="mt-4 grid md:grid-cols-3 gap-6">
+        <div class="glass card p-6 shadow-soft">
+          <h3 class="font-semibold">첫충전 보너스</h3>
+          <p class="text-sm text-gray-600 mt-2">조건/웨이저/제외게임 등 세부 조건을 명확히 안내.</p>
+          <button class="mt-4 px-4 py-2 rounded-xl bg-black text-white" onclick="alert('폼 연결 예정')">신청</button>
+        </div>
+        <div class="glass card p-6 shadow-soft">
+          <h3 class="font-semibold">재입금 리워드</h3>
+          <p class="text-sm text-gray-600 mt-2">지속 사용자 리텐션 강화 설계.</p>
+          <button class="mt-4 px-4 py-2 rounded-xl border" onclick="alert('폼 연결 예정')">자세히</button>
+        </div>
+        <div class="glass card p-6 shadow-soft">
+          <h3 class="font-semibold">페이백/최대출금</h3>
+          <p class="text-sm text-gray-600 mt-2">리스크/회수 균형형 이벤트 안내.</p>
+          <button class="mt-4 px-4 py-2 rounded-xl border" onclick="alert('폼 연결 예정')">자세히</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare">
+      <h2 class="text-2xl font-semibold">비교 아카데미</h2>
+      <div class="mt-4 glass card p-6 shadow-soft">
+        <p class="text-gray-700">대분류/중분류 멀티 필터 + 가중합산(0~100) 방식 순위. 좌측 사이드바(데스크톱), 상단 드로어(모바일) 구조를 앞으로 붙일 예정.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="text-2xl font-semibold">문의</h2>
+      <form class="mt-4 glass card p-6 shadow-soft grid gap-4 max-w-xl">
+        <input class="border rounded-xl px-4 py-3" placeholder="이름">
+        <input class="border rounded-xl px-4 py-3" placeholder="연락처">
+        <textarea class="border rounded-xl px-4 py-3" rows="4" placeholder="문의 내용"></textarea>
+        <button type="button" class="px-5 py-3 rounded-2xl bg-black text-white hover:opacity-90" onclick="alert('제출됨(데모)')">보내기</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="border-t py-8 text-center text-sm text-gray-500">
+    © 2025 CITY156 / CP10
+  </footer>
+
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>
