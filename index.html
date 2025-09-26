@@ -5,142 +5,159 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>BET33</title>
 <style>
-:root{
-  --radius:16px;
-  --glass:rgba(255,255,255,.65);
-  --line:rgba(0,0,0,.08);
-  --text:#111;
-  --maxw:1200px;
-}
-*{box-sizing:border-box}
+:root{ --radius:16px; --glass:rgba(255,255,255,.65); --line:rgba(0,0,0,.08); --text:#111; --maxw:1200px;}
+*{box-sizing:border-box} html,body{height:100%}
 body{
   margin:0; color:var(--text);
-  background: linear-gradient(135deg,#ffffff 0%,#f7f9ff 45%,#f3faff 100%);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Arial, sans-serif;
-  min-height:100vh;
-  transition: background .5s ease;
+  background:#ffffff url("assets/logo-wall.gif") center/600px repeat;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Arial,sans-serif;
+  transition:background .5s ease,color .5s ease;
+  min-height:100%;
 }
-body.storm{ background:#06080f; color:#e8ecf3; }
-header{
-  position:sticky; top:0; z-index:10;
-  backdrop-filter: blur(12px);
-  background:var(--glass); border-bottom:1px solid var(--line);
-}
-.wrap{max-width:var(--maxw); margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:16px;}
-.brand img{ height:60px; display:block; }
-main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative;}
-/* Center "monitor" (half-size) */
-.hero{ position:relative; border-radius:var(--radius); background:var(--glass); border:1px solid var(--line);
-       padding:20px; box-shadow:0 8px 30px rgba(0,0,0,.1); }
-.frame{ width:50%; margin:0 auto; border-radius:12px; overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,.35); }
-.frame video, .frame img{ width:100%; height:auto; display:block; }
-.blackout .frame{ background:#000; }
-.overlayTxt{ text-align:center; margin-top:10px; font-weight:800; font-size:clamp(18px,3vw,28px); color:#333 }
-.blackout .overlayTxt{ color:#ddd }
-/* Cards */
+body.dark{ background:#000 url("assets/logo-wall-neon.gif") center/600px repeat; color:#e8ecf3; }
+
+header{ position:sticky; top:0; z-index:20; backdrop-filter:blur(12px); background:var(--glass); border-bottom:1px solid var(--line) }
+.wrap{max-width:var(--maxw); margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:16px}
+.brand{display:flex; align-items:center; gap:12px; font-weight:900}
+.brand img{height:48px; display:block}
+
+.coupon-btn{ margin-left:auto; padding:10px 22px; background:linear-gradient(135deg,#ff4081,#7c4dff);
+  color:#fff; font-weight:800; border:none; border-radius:999px; box-shadow:0 0 14px rgba(255,64,129,.65),0 0 24px rgba(124,77,255,.5);
+  cursor:pointer; transition:transform .15s ease,box-shadow .15s ease; }
+.coupon-btn:hover{ transform:translateY(-1px) scale(1.03); }
+
+main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative}
+.hero{ position:relative; border-radius:var(--radius); background:var(--glass); border:1px solid var(--line); padding:20px; box-shadow:0 8px 30px rgba(0,0,0,.08) }
+
+/* 16:9 고정 프레임 */
+.frame{ position:relative; width:70%; margin:0 auto; border-radius:12px; overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,.35); aspect-ratio:16/9; background:#000 }
+.frame video,.frame img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block }
+.blackout .frame{ background:#000 } .blackout .frame video{ opacity:0 }
+.overlayTxt{ text-align:center; margin-top:10px; font-weight:800; font-size:clamp(18px,3vw,24px); color:#333 } body.dark .overlayTxt{ color:#ddd }
+
 .row{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-.card{ background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
-       padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px);}
+.card{ background:var(--glass); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px)}
 .card h3{margin:0 0 8px 0; font-size:18px}
-/* Background video (only visible in storm mode) */
-.bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .2s;
-           z-index:-1; pointer-events:none; }
-.bg-on .bg-video{ opacity:1; z-index:0 }
-/* Coupon button */
-.coupon-btn {
-  position: fixed;
-  right: 32px;
-  top: 140px;
-  padding: 18px 26px;
-  background: linear-gradient(135deg, #ff4081, #7c4dff);
-  color: #fff;
-  font-weight: 900;
-  font-size: 20px;
-  border-radius: 40px;
-  box-shadow: 0 0 20px rgba(255,64,129,.7), 0 0 40px rgba(124,77,255,.6);
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease;
-  z-index: 50;
-}
-.coupon-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(255,64,129,.9), 0 0 60px rgba(124,77,255,.8);
-}
-@media (max-width:900px){ .frame{ width:92%; } .row{ grid-template-columns:1fr } }
+
+.bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .1s linear; z-index:-1; pointer-events:none }
+body.dark .bg-video{ opacity:1; z-index:0 }
+#bgMask{ position:fixed; inset:0; background:#000; opacity:0; pointer-events:none; z-index:1; transition:opacity .06s linear }
+.join-btn{ padding:10px 18px; border-radius:10px; background:#111; color:#fff; font-weight:700; border:none; cursor:pointer }
+@media (max-width:900px){ .frame{ width:92% } .brand img{height:40px} }
 </style>
 </head>
 <body>
-  <!-- Background video -->
   <video id="bgVid" class="bg-video" muted playsinline loop poster="assets/bg-poster.jpg">
-    <source src="assets/bg.mp4" type="video/mp4" />
+    <source src="assets/bg.mp4" type="video/mp4"/>
   </video>
-
-  <!-- Audio -->
-  <audio id="djMusic" src="assets/dj.mp3" preload="auto"></audio>
+  <div id="bgMask"></div>
+  <audio id="djMusic" src="assets/dj-music.mp3" preload="auto"></audio>
 
   <header>
     <div class="wrap">
-      <div class="brand"><img src="assets/33LOGO.png" alt="BET33 로고"></div>
-      <div style="margin-left:auto; opacity:.7;">히어로 / 이벤트 / 문의</div>
+      <div class="brand">
+        <img src="assets/logo.png" alt="BET33"/>
+        <div>이벤트 참여 신개념방식&nbsp;&nbsp;|&nbsp;&nbsp;혜택 지급방식</div>
+      </div>
+      <button id="couponBtn" class="coupon-btn">쿠폰 받기</button>
     </div>
   </header>
-
-  <!-- 쿠폰 버튼 -->
-  <div id="couponBtn" class="coupon-btn">쿠폰 받기</div>
 
   <main>
     <section id="hero" class="hero">
       <div class="frame">
         <video id="heroVid" autoplay muted loop playsinline poster="assets/center-poster.jpg">
-          <source src="assets/center.mp4" type="video/mp4" />
+          <source src="assets/center.mp4" type="video/mp4"/>
         </video>
       </div>
       <div class="overlayTxt">중앙 영상</div>
     </section>
 
     <section class="row">
-      <div class="card"><h3>첫충전 보너스</h3><p>첫 입금 이용자를 위한 기본 혜택.</p></div>
-      <div class="card"><h3>재입금 리워드</h3><p>지속 이용자를 위한 리텐션 설계.</p></div>
-      <div class="card"><h3>페이백/최대출금</h3><p>리스크·한도 규정은 사전 고지 기준으로 안내.</p></div>
+      <div class="card">
+        <h3>첫충전 보너스</h3>
+        <p>신규 첫 입금자 기본 혜택. <button id="joinBtn" class="join-btn">가입하기</button></p>
+      </div>
+      <div class="card"><h3>재입금 리워드</h3><p>지속 사용자 리텐션 설계.</p></div>
+      <div class="card"><h3>페이백/최대출금</h3><p>리스크·한도는 사전 고지 기준.</p></div>
     </section>
   </main>
 
-  <script>
-    const body = document.body;
-    const hero = document.getElementById('hero');
-    const heroVid = document.getElementById('heroVid');
-    const bgVid = document.getElementById('bgVid');
-    const djMusic = document.getElementById('djMusic');
-    const couponBtn = document.getElementById('couponBtn');
+<script>
+const body = document.body;
+const hero = document.getElementById('hero');
+const heroVid = document.getElementById('heroVid');
+const bgVid = document.getElementById('bgVid');
+const bgMask = document.getElementById('bgMask');
+const coupon = document.getElementById('couponBtn');
+const joinBtn = document.getElementById('joinBtn');
+const music = document.getElementById('djMusic');
 
-    let storm = false;
+let bgMode = false; // false: center, true: background
+let flickerTimer = null;
 
-    function setState(toBackground){
-      if(toBackground){
-        hero.classList.add('blackout');
-        if(heroVid) heroVid.pause();
-        body.classList.add('bg-on','storm'); 
-        if(bgVid){ try{ bgVid.currentTime = 0; }catch(e){} bgVid.play(); }
-      }else{
-        hero.classList.remove('blackout');
-        if(heroVid) heroVid.play();
-        body.classList.remove('bg-on','storm'); 
-        if(bgVid) bgVid.pause();
-      }
+function setState(toBackground){
+  bgMode = !!toBackground;
+  if(bgMode){
+    hero.classList.add('blackout');
+    try{ heroVid.pause(); }catch(e){}
+    body.classList.add('dark');
+    try{ bgVid.currentTime = 0; bgVid.play(); }catch(e){}
+  }else{
+    hero.classList.remove('blackout');
+    try{ heroVid.play(); }catch(e){}
+    body.classList.remove('dark');
+    try{ bgVid.pause(); }catch(e){}
+    hideBgMask();
+  }
+}
+
+function showBgMask(){ bgMask.style.opacity = 1; }
+function hideBgMask(){ bgMask.style.opacity = 0; }
+
+function staccato(durationMs, n, toggleFn, finalizer){
+  if(flickerTimer) clearInterval(flickerTimer);
+  const step = Math.max(15, Math.floor(durationMs / n));
+  let i = 0;
+  toggleFn(i);
+  flickerTimer = setInterval(()=>{
+    i++; toggleFn(i);
+    if(i >= n){
+      clearInterval(flickerTimer); flickerTimer = null;
+      if(finalizer) finalizer();
     }
+  }, step);
+}
 
-    couponBtn.addEventListener('click', ()=>{
-      // 음악 재생 (70% 볼륨)
-      djMusic.volume = 0.7;
-      try{ djMusic.currentTime = 0; djMusic.play(); }catch(e){}
+function runCouponFlicker(){
+  music.volume = 0.7; try{ music.currentTime = 0; music.play(); }catch(e){}
+  const toBackground = !bgMode;
+  const total = 2000;  // 2초
+  const times = 10;    // 10회
 
-      // 화면 전환 (중앙 → 배경 or 배경 → 중앙)
-      storm = !storm;
-      setState(storm);
-    });
+  staccato(total, times, (i)=>{
+    const odd = i % 2 === 1;
+    if(toBackground){
+      if(odd){ hero.classList.add('blackout'); body.classList.add('dark'); try{ bgVid.play(); }catch(e){} }
+      else   { hero.classList.remove('blackout'); body.classList.remove('dark'); try{ bgVid.pause(); }catch(e){} }
+    }else{
+      hero.classList.remove('blackout');
+      body.classList.add('dark'); try{ bgVid.play(); }catch(e){};
+      (odd ? showBgMask : hideBgMask)();
+    }
+  }, ()=>{ hideBgMask(); setState(toBackground); });
+}
 
-    // 초기 중앙 모드
-    setState(false);
-  </script>
+function pumpBackground(){
+  if(bgMode) return;
+  const times = 14, total = 3000;
+  staccato(total, times, (i)=>{ (i % 2 === 0 ? showBgMask : hideBgMask)(); }, ()=> hideBgMask());
+}
+
+coupon.addEventListener('click', runCouponFlicker);
+if (joinBtn) joinBtn.addEventListener('click', runCouponFlicker);
+
+setState(false);
+</script>
 </body>
 </html>
