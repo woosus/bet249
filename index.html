@@ -7,41 +7,52 @@
   <style>
     :root{
       --radius:16px;
-      --glass:rgba(255,255,255,.6);
-      --line:rgba(255,255,255,.35);
+      --glass:rgba(255,255,255,.65);
+      --line:rgba(0,0,0,.08);
       --text:#111;
+      --maxw:1200px;
     }
     *{box-sizing:border-box}
     body{
       margin:0; color:var(--text);
-      background: linear-gradient(135deg,#ffffff 0%,#f6f7fb 40%,#f2f8ff 100%);
+      background: linear-gradient(135deg,#ffffff 0%,#f7f9ff 45%,#f3faff 100%);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Arial, sans-serif;
+      min-height:100vh;
     }
+    .bg-video{
+      position: fixed; inset: 0; width:100%; height:100%; object-fit: cover;
+      opacity: 0; pointer-events: none; transition: opacity .5s ease;
+      z-index: -1;
+    }
+    .bg-on .bg-video{ opacity: 1; z-index: 0; }
     header{
-      position:sticky; top:0; z-index:20;
+      position:sticky; top:0; z-index:10;
       backdrop-filter: blur(12px);
       background:var(--glass); border-bottom:1px solid var(--line);
     }
-    .wrap{max-width:1200px; margin:0 auto; padding:12px 20px;}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:12px 20px;}
     .nav{display:flex; gap:18px; align-items:center}
     .nav a{text-decoration:none; color:#222; opacity:.85}
     .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.6px}
-    .brand img{height:42px}
-    main{max-width:1200px; margin:24px auto 80px; padding:0 20px; display:grid; gap:24px;}
-    /* --- HERO --- */
+    .brand span.logo{display:inline-block; width:110px; height:24px; background:linear-gradient(90deg,#f7d387,#e7b975);
+      color:transparent; -webkit-background-clip:text; background-clip:text; font-size:22px}
+    main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative;}
     .hero{
-      position:relative; height:420px; border-radius:var(--radius); overflow:hidden;
+      position:relative; height:1050px;
+      border-radius:var(--radius); overflow:hidden;
       background: linear-gradient(135deg, #d6e4ff, #ffe2e2, #e9ffe5);
-      border:1px solid var(--line);
-      box-shadow:0 6px 30px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.4);
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 8px 40px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.6);
     }
     .hero video{width:100%; height:100%; object-fit:cover}
     .overlay{
       position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
       background: linear-gradient(0deg, rgba(0,0,0,.25), rgba(0,0,0,.12));
       color:#fff; text-shadow:0 0 18px rgba(0,0,0,.45);
-      font-size: clamp(22px, 4vw, 36px); font-weight:800;
+      font-size: clamp(24px, 4vw, 40px); font-weight:800;
+      transition: background .3s ease, opacity .3s ease;
     }
+    .blackout .overlay{ background: rgba(0,0,0,.85); }
     .row{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
     .card{
       background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
@@ -53,15 +64,19 @@
       background:#111; color:#fff; text-decoration:none; font-weight:700
     }
     footer{opacity:.6; text-align:center; padding:40px 0}
-    @media (max-width:900px){ .row{grid-template-columns:1fr} .hero{height:320px} }
+    @media (max-width:1024px){ .hero{height:760px} }
+    @media (max-width:800px){ .row{grid-template-columns:1fr} .hero{height:520px} }
   </style>
 </head>
 <body>
+  <video id="bgVid" class="bg-video" muted playsinline loop>
+    <source src="assets/hero2.mp4" type="video/mp4" />
+  </video>
+
   <header>
     <div class="wrap nav">
       <span class="brand">
-        <img alt="BET33" src="assets/logo.png" />
-        BET33
+        <span class="logo">BET33</span>
       </span>
       <nav style="margin-left:auto; display:flex; gap:16px;">
         <a href="#hero1">히어로1</a>
@@ -73,23 +88,20 @@
   </header>
 
   <main>
-    <!-- HERO 1 -->
     <section id="hero1" class="hero">
-      <video autoplay muted loop playsinline poster="assets/hero1-poster.jpg">
+      <video id="hero1Vid" autoplay muted loop playsinline poster="assets/hero1-poster.jpg">
         <source src="assets/hero1.mp4" type="video/mp4" />
       </video>
       <div class="overlay">오늘 미친형님의 미친배팅</div>
     </section>
 
-    <!-- HERO 2 -->
     <section id="hero2" class="hero">
-      <video controls playsinline poster="assets/hero2-poster.jpg">
+      <video id="hero2Vid" controls playsinline poster="assets/hero2-poster.jpg">
         <source src="assets/hero2.mp4" type="video/mp4" />
       </video>
       <div class="overlay">BET33 스페셜 이벤트</div>
     </section>
 
-    <!-- 이벤트 카드 -->
     <section id="events" class="row">
       <div class="card">
         <h3>첫충전 보너스</h3>
@@ -108,13 +120,35 @@
       </div>
     </section>
 
-    <!-- 문의 -->
     <section id="contact" class="card">
       <h3>문의</h3>
       <p>간단한 문의는 메일로 남겨주세요. 영업/제휴는 별도 안내로 진행합니다.</p>
+      <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap">
+        <a class="btn" href="javascript:void(0)" onclick="triggerLightning()">번개 테스트</a>
+        <a class="btn" href="javascript:void(0)" onclick="endLightning()">복귀</a>
+      </div>
     </section>
   </main>
 
   <footer>© BET33</footer>
+
+  <script>
+    const body = document.body;
+    const hero1 = document.getElementById('hero1');
+    const hero1Vid = document.getElementById('hero1Vid');
+    const bgVid = document.getElementById('bgVid');
+    function triggerLightning(){
+      hero1.classList.add('blackout');
+      if(hero1Vid){ hero1Vid.pause(); }
+      body.classList.add('bg-on');
+      if(bgVid){ try{ bgVid.currentTime = 0; }catch(e){} bgVid.play(); }
+    }
+    function endLightning(){
+      hero1.classList.remove('blackout');
+      if(hero1Vid){ hero1Vid.play(); }
+      body.classList.remove('bg-on');
+      if(bgVid){ bgVid.pause(); }
+    }
+  </script>
 </body>
 </html>
