@@ -1,82 +1,95 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BET33</title>
-  <style>
-    :root{
-      --radius:16px;
-      --glass:rgba(255,255,255,.65);
-      --line:rgba(0,0,0,.08);
-      --text:#111;
-      --maxw:1200px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; color:var(--text);
-      background: linear-gradient(135deg,#ffffff 0%,#f7f9ff 45%,#f3faff 100%);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Arial, sans-serif;
-      min-height:100vh;
-    }
-    .bg-video{
-      position: fixed; inset: 0; width:100%; height:100%; object-fit: cover;
-      opacity: 0; pointer-events: none; transition: opacity .5s ease;
-      z-index: -1;
-    }
-    .bg-on .bg-video{ opacity: 1; z-index: 0; }
-    header{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter: blur(12px);
-      background:var(--glass); border-bottom:1px solid var(--line);
-    }
-    .wrap{max-width:var(--maxw); margin:0 auto; padding:12px 20px;}
-    .nav{display:flex; gap:18px; align-items:center}
-    .nav a{text-decoration:none; color:#222; opacity:.85}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.6px}
-    .brand span.logo{display:inline-block; width:110px; height:24px; background:linear-gradient(90deg,#f7d387,#e7b975);
-      color:transparent; -webkit-background-clip:text; background-clip:text; font-size:22px}
-    main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative;}
-    .hero{
-      position:relative; height:1050px;
-      border-radius:var(--radius); overflow:hidden;
-      background: linear-gradient(135deg, #d6e4ff, #ffe2e2, #e9ffe5);
-      border:1px solid rgba(0,0,0,.06);
-      box-shadow:0 8px 40px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.6);
-    }
-    .hero video{width:100%; height:100%; object-fit:cover}
-    .overlay{
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      background: linear-gradient(0deg, rgba(0,0,0,.25), rgba(0,0,0,.12));
-      color:#fff; text-shadow:0 0 18px rgba(0,0,0,.45);
-      font-size: clamp(24px, 4vw, 40px); font-weight:800;
-      transition: background .3s ease, opacity .3s ease;
-    }
-    .blackout .overlay{ background: rgba(0,0,0,.85); }
-    .row{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-    .card{
-      background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
-      padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px);
-    }
-    .card h3{margin:0 0 8px 0; font-size:18px}
-    .btn{
-      display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,.08);
-      background:#111; color:#fff; text-decoration:none; font-weight:700
-    }
-    footer{opacity:.6; text-align:center; padding:40px 0}
-    @media (max-width:1024px){ .hero{height:760px} }
-    @media (max-width:800px){ .row{grid-template-columns:1fr} .hero{height:520px} }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BET33</title>
+<style>
+:root{
+  --radius:16px;
+  --glass:rgba(255,255,255,.65);
+  --line:rgba(0,0,0,.08);
+  --text:#111;
+  --maxw:1200px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--text);
+  background: linear-gradient(135deg,#ffffff 0%,#f7f9ff 45%,#f3faff 100%);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Arial, sans-serif;
+  min-height:100vh;
+  transition: background .6s ease;
+}
+body.storm{
+  background: radial-gradient(1200px 800px at 50% -20%, #1b1e27 0%, #0e1117 40%, #05070b 100%);
+  color:#e8ecf3;
+}
+header{
+  position:sticky; top:0; z-index:10;
+  backdrop-filter: blur(12px);
+  background:var(--glass); border-bottom:1px solid var(--line);
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:12px 20px;}
+.nav{display:flex; gap:18px; align-items:center}
+.nav a{text-decoration:none; color:#222; opacity:.85}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.6px}
+.brand img{height:42px}
+main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative;}
+.hero{
+  position:relative; height:1050px; border-radius:var(--radius); overflow:hidden;
+  background: linear-gradient(135deg, #d6e4ff, #ffe2e2, #e9ffe5);
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 8px 40px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.6);
+  transition: filter .2s ease, opacity .2s ease, background .2s ease;
+}
+.hero video{width:100%; height:100%; object-fit:cover}
+.overlay{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(0deg, rgba(0,0,0,.25), rgba(0,0,0,.12));
+  color:#fff; text-shadow:0 0 18px rgba(0,0,0,.45);
+  font-size: clamp(24px, 4vw, 40px); font-weight:800;
+}
+.blackout .overlay{ background: rgba(0,0,0,.85); }
+.row{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.card{ background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px); }
+.card h3{margin:0 0 8px 0; font-size:18px}
+.btn{display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,.08);
+  background:#111; color:#fff; text-decoration:none; font-weight:700}
+footer{opacity:.6; text-align:center; padding:40px 0}
+@media (max-width:1024px){ .hero{height:760px} }
+@media (max-width:800px){ .row{grid-template-columns:1fr} .hero{height:520px} }
+.bg-video{
+  position: fixed; inset: 0; width:100%; height:100%; object-fit: cover;
+  opacity: 0; pointer-events: none; transition: opacity .15s ease;
+  z-index: -1;
+}
+.bg-on .bg-video{ opacity: 1; z-index: 0; }
+.switch{
+  position: fixed; right: 32px; top: 140px; z-index: 50;
+  width: 92px; height: 188px; border-radius: 20px;
+  background: #eef1f7; box-shadow: 0 10px 30px rgba(0,0,0,.18), inset 0 2px 0 #fff;
+  border: 2px solid rgba(0,0,0,.18);
+  display:flex; flex-direction:column; overflow:hidden; user-select:none; cursor:pointer;
+}
+.switch .cell{ flex:1; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:22px;
+  color:#fff; letter-spacing:.5px; }
+.switch .on{ background:#e53935; }
+.switch .off{ background:#7cb342; border-top:2px solid rgba(255,255,255,.35); }
+.switch-label{ position:fixed; right: 34px; top: 112px; font-size:12px; opacity:.6; }
+</style>
 </head>
 <body>
   <video id="bgVid" class="bg-video" muted playsinline loop>
     <source src="assets/hero2.mp4" type="video/mp4" />
   </video>
+  <audio id="thunder" src="assets/thunder.wav" preload="auto"></audio>
 
   <header>
     <div class="wrap nav">
       <span class="brand">
-        <span class="logo">BET33</span>
+        <img alt="BET33" src="assets/logo.png" />
+        BET33
       </span>
       <nav style="margin-left:auto; display:flex; gap:16px;">
         <a href="#hero1">히어로1</a>
@@ -87,68 +100,86 @@
     </div>
   </header>
 
+  <div class="switch-label">배경 전환</div>
+  <div id="stormSwitch" class="switch" aria-label="storm switch">
+    <div class="cell on">ON</div>
+    <div class="cell off">OFF</div>
+  </div>
+
   <main>
     <section id="hero1" class="hero">
       <video id="hero1Vid" autoplay muted loop playsinline poster="assets/hero1-poster.jpg">
         <source src="assets/hero1.mp4" type="video/mp4" />
       </video>
-      <div class="overlay">오늘 미친형님의 미친배팅</div>
+      <div class="overlay">BET33 스페셜 이벤트</div>
     </section>
 
     <section id="hero2" class="hero">
       <video id="hero2Vid" controls playsinline poster="assets/hero2-poster.jpg">
         <source src="assets/hero2.mp4" type="video/mp4" />
       </video>
-      <div class="overlay">BET33 스페셜 이벤트</div>
+      <div class="overlay">보조 영상</div>
     </section>
 
     <section id="events" class="row">
-      <div class="card">
-        <h3>첫충전 보너스</h3>
-        <p>첫 입금 이용자를 위한 기본 혜택.</p>
-        <a class="btn" href="#">신청</a>
-      </div>
-      <div class="card">
-        <h3>재입금 리워드</h3>
-        <p>지속 이용자를 위한 리텐션 설계.</p>
-        <a class="btn" href="#">자세히</a>
-      </div>
-      <div class="card">
-        <h3>페이백/최대출금</h3>
-        <p>리스크·한도 규정은 사전 고지 기준으로 안내.</p>
-        <a class="btn" href="#">자세히</a>
-      </div>
+      <div class="card"><h3>첫충전 보너스</h3><p>첫 입금 이용자를 위한 기본 혜택.</p><a class="btn" href="#">신청</a></div>
+      <div class="card"><h3>재입금 리워드</h3><p>지속 이용자를 위한 리텐션 설계.</p><a class="btn" href="#">자세히</a></div>
+      <div class="card"><h3>페이백/최대출금</h3><p>리스크·한도 규정은 사전 고지 기준으로 안내.</p><a class="btn" href="#">자세히</a></div>
     </section>
 
     <section id="contact" class="card">
       <h3>문의</h3>
       <p>간단한 문의는 메일로 남겨주세요. 영업/제휴는 별도 안내로 진행합니다.</p>
-      <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap">
-        <a class="btn" href="javascript:void(0)" onclick="triggerLightning()">번개 테스트</a>
-        <a class="btn" href="javascript:void(0)" onclick="endLightning()">복귀</a>
-      </div>
     </section>
   </main>
 
   <footer>© BET33</footer>
 
-  <script>
-    const body = document.body;
-    const hero1 = document.getElementById('hero1');
-    const hero1Vid = document.getElementById('hero1Vid');
-    const bgVid = document.getElementById('bgVid');
-    function triggerLightning(){
-      hero1.classList.add('blackout');
-      if(hero1Vid){ hero1Vid.pause(); }
-      body.classList.add('bg-on');
-      if(bgVid){ try{ bgVid.currentTime = 0; }catch(e){} bgVid.play(); }
+<script>
+const body = document.body;
+const hero1 = document.getElementById('hero1');
+const hero1Vid = document.getElementById('hero1Vid');
+const bgVid = document.getElementById('bgVid');
+const thunder = document.getElementById('thunder');
+const stormSwitch = document.getElementById('stormSwitch');
+
+let stormMode = false;
+function flickerSequence(finalToBackground){
+  const steps = [1,2,1,2,1,2,1];
+  const total = 1500;
+  const interval = Math.floor(total / steps.length);
+  let i = 0;
+  const timer = setInterval(()=>{
+    const s = steps[i];
+    applyState(s === 2);
+    i++;
+    if(i >= steps.length){
+      clearInterval(timer);
+      applyState(finalToBackground);
+      stormMode = finalToBackground;
+      body.classList.toggle('storm', stormMode);
     }
-    function endLightning(){
-      hero1.classList.remove('blackout');
-      if(hero1Vid){ hero1Vid.play(); }
-      body.classList.remove('bg-on');
-      if(bgVid){ bgVid.pause(); }
-    }
-  </script>
+  }, interval);
+}
+function applyState(toBackground){
+  if(toBackground){
+    hero1.classList.add('blackout');
+    if(hero1Vid) hero1Vid.pause();
+    body.classList.add('bg-on');
+    if(bgVid){ try{ bgVid.currentTime = 0; }catch(e){} bgVid.play(); }
+  }else{
+    hero1.classList.remove('blackout');
+    if(hero1Vid) hero1Vid.play();
+    body.classList.remove('bg-on');
+    if(bgVid) bgVid.pause();
+  }
+}
+stormSwitch.addEventListener('click', ()=>{
+  try { thunder.currentTime = 0; thunder.play(); } catch(e){}
+  const goBackground = !stormMode;
+  flickerSequence(goBackground);
+});
+applyState(false);
+</script>
 </body>
 </html>
