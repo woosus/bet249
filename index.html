@@ -51,8 +51,10 @@ main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid;
 }
 .blackout .overlay{ background: rgba(0,0,0,.85); }
 .row{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-.card{ background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
-  padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px); }
+.card{
+  background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px);
+}
 .card h3{margin:0 0 8px 0; font-size:18px}
 .btn{display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,.08);
   background:#111; color:#fff; text-decoration:none; font-weight:700}
@@ -80,6 +82,7 @@ footer{opacity:.6; text-align:center; padding:40px 0}
 </style>
 </head>
 <body>
+  <!-- Background video is still used for storm mode -->
   <video id="bgVid" class="bg-video" muted playsinline loop>
     <source src="assets/hero2.mp4" type="video/mp4" />
   </video>
@@ -92,8 +95,7 @@ footer{opacity:.6; text-align:center; padding:40px 0}
         BET33
       </span>
       <nav style="margin-left:auto; display:flex; gap:16px;">
-        <a href="#hero1">히어로1</a>
-        <a href="#hero2">히어로2</a>
+        <a href="#hero1">히어로</a>
         <a href="#events">이벤트</a>
         <a href="#contact">문의</a>
       </nav>
@@ -114,12 +116,7 @@ footer{opacity:.6; text-align:center; padding:40px 0}
       <div class="overlay">BET33 스페셜 이벤트</div>
     </section>
 
-    <section id="hero2" class="hero">
-      <video id="hero2Vid" controls playsinline poster="assets/hero2-poster.jpg">
-        <source src="assets/hero2.mp4" type="video/mp4" />
-      </video>
-      <div class="overlay">보조 영상</div>
-    </section>
+    <!-- 보조 히어로(2) 제거됨 -->
 
     <section id="events" class="row">
       <div class="card"><h3>첫충전 보너스</h3><p>첫 입금 이용자를 위한 기본 혜택.</p><a class="btn" href="#">신청</a></div>
@@ -144,6 +141,8 @@ const thunder = document.getElementById('thunder');
 const stormSwitch = document.getElementById('stormSwitch');
 
 let stormMode = false;
+
+// same flicker logic 1.5s 1-2-1-2-1-2-1
 function flickerSequence(finalToBackground){
   const steps = [1,2,1,2,1,2,1];
   const total = 1500;
@@ -161,6 +160,7 @@ function flickerSequence(finalToBackground){
     }
   }, interval);
 }
+
 function applyState(toBackground){
   if(toBackground){
     hero1.classList.add('blackout');
@@ -174,11 +174,13 @@ function applyState(toBackground){
     if(bgVid) bgVid.pause();
   }
 }
+
 stormSwitch.addEventListener('click', ()=>{
   try { thunder.currentTime = 0; thunder.play(); } catch(e){}
   const goBackground = !stormMode;
   flickerSequence(goBackground);
 });
+
 applyState(false);
 </script>
 </body>
