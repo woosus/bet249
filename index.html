@@ -27,7 +27,7 @@ header{
   background:var(--glass); border-bottom:1px solid var(--line);
 }
 .wrap{max-width:var(--maxw); margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:16px;}
-.brand{font-size:28px; font-weight:900; letter-spacing:.6px}
+.brand img{ height:60px; display:block; }
 main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative;}
 /* Center "monitor" (half-size) */
 .hero{ position:relative; border-radius:var(--radius); background:var(--glass); border:1px solid var(--line);
@@ -46,37 +46,47 @@ main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid;
 .bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .2s;
            z-index:-1; pointer-events:none; }
 .bg-on .bg-video{ opacity:1; z-index:0 }
-/* Switch */
-.switch{ position:fixed; right:32px; top:140px; width:92px; height:188px; border-radius:20px;
-         background:#eef1f7; border:2px solid rgba(0,0,0,.18);
-         box-shadow:0 10px 30px rgba(0,0,0,.18), inset 0 2px 0 #fff; overflow:hidden; cursor:pointer; z-index:50; }
-.switch .cell{ flex:1; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:22px; color:#fff }
-.switch{ display:flex; flex-direction:column }
-.switch .on{ background:#e53935 }
-.switch .off{ background:#7cb342; border-top:2px solid rgba(255,255,255,.35) }
-.switch-label{ position:fixed; right:34px; top:112px; font-size:12px; opacity:.6 }
+/* Coupon button */
+.coupon-btn {
+  position: fixed;
+  right: 32px;
+  top: 140px;
+  padding: 18px 26px;
+  background: linear-gradient(135deg, #ff4081, #7c4dff);
+  color: #fff;
+  font-weight: 900;
+  font-size: 20px;
+  border-radius: 40px;
+  box-shadow: 0 0 20px rgba(255,64,129,.7), 0 0 40px rgba(124,77,255,.6);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+  z-index: 50;
+}
+.coupon-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255,64,129,.9), 0 0 60px rgba(124,77,255,.8);
+}
 @media (max-width:900px){ .frame{ width:92%; } .row{ grid-template-columns:1fr } }
 </style>
 </head>
 <body>
-  <!-- Background video (antiphase target) -->
+  <!-- Background video -->
   <video id="bgVid" class="bg-video" muted playsinline loop poster="assets/bg-poster.jpg">
     <source src="assets/bg.mp4" type="video/mp4" />
   </video>
-  <audio id="thunder" src="assets/thunder.wav" preload="auto"></audio>
+
+  <!-- Audio -->
+  <audio id="djMusic" src="assets/dj.mp3" preload="auto"></audio>
 
   <header>
     <div class="wrap">
-      <div class="brand">BET33</div>
+      <div class="brand"><img src="assets/33LOGO.png" alt="BET33 로고"></div>
       <div style="margin-left:auto; opacity:.7;">히어로 / 이벤트 / 문의</div>
     </div>
   </header>
 
-  <div class="switch-label">배경 전환</div>
-  <div id="stormSwitch" class="switch" aria-label="storm switch">
-    <div class="cell on">ON</div>
-    <div class="cell off">OFF</div>
-  </div>
+  <!-- 쿠폰 버튼 -->
+  <div id="couponBtn" class="coupon-btn">쿠폰 받기</div>
 
   <main>
     <section id="hero" class="hero">
@@ -100,39 +110,36 @@ main{max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid;
     const hero = document.getElementById('hero');
     const heroVid = document.getElementById('heroVid');
     const bgVid = document.getElementById('bgVid');
-    const thunder = document.getElementById('thunder');
-    const stormSwitch = document.getElementById('stormSwitch');
+    const djMusic = document.getElementById('djMusic');
+    const couponBtn = document.getElementById('couponBtn');
 
-    let storm = false; // false=center, true=background
+    let storm = false;
+
     function setState(toBackground){
       if(toBackground){
         hero.classList.add('blackout');
         if(heroVid) heroVid.pause();
-        body.classList.add('bg-on','storm'); // show background video and dark theme
+        body.classList.add('bg-on','storm'); 
         if(bgVid){ try{ bgVid.currentTime = 0; }catch(e){} bgVid.play(); }
       }else{
         hero.classList.remove('blackout');
         if(heroVid) heroVid.play();
-        body.classList.remove('bg-on','storm'); // hide background, return to clear
+        body.classList.remove('bg-on','storm'); 
         if(bgVid) bgVid.pause();
       }
     }
-    function flicker(finalToBackground){
-      const seq = [0,1,0,1,0,1,0]; // 0=center,1=background
-      const total = 1500, step = Math.floor(total/seq.length);
-      let i=0;
-      const tm = setInterval(()=>{
-        setState(!!seq[i]);
-        if(++i>=seq.length){ clearInterval(tm); setState(finalToBackground); storm = finalToBackground; }
-      }, step);
-    }
-    stormSwitch.addEventListener('click', ()=>{
-      try{ thunder.currentTime=0; thunder.play(); }catch(e){}
-      const goBg = !storm;
-      flicker(goBg);
+
+    couponBtn.addEventListener('click', ()=>{
+      // 음악 재생 (70% 볼륨)
+      djMusic.volume = 0.7;
+      try{ djMusic.currentTime = 0; djMusic.play(); }catch(e){}
+
+      // 화면 전환 (중앙 → 배경 or 배경 → 중앙)
+      storm = !storm;
+      setState(storm);
     });
 
-    // start in center mode
+    // 초기 중앙 모드
     setState(false);
   </script>
 </body>
