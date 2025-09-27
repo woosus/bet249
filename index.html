@@ -5,237 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>BET33</title>
 <style>
-:root{ --maxw:1200px; --glass:rgba(255,255,255,.66); --line:rgba(0,0,0,.08); --radius:18px; }
-*{box-sizing:border-box} html,body{height:100%}
-body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Arial,sans-serif;
-  color:#0e1726; background:#f4f7fb; transition:background .35s ease,color .35s ease;}
-body.dark{ background:#000; color:#e8ecf3; }
-a{color:inherit; text-decoration:none}
-header{position:sticky; top:0; z-index:50; backdrop-filter:blur(12px);
-  background:var(--glass); border-bottom:1px solid var(--line);}
-.nav{max-width:var(--maxw); margin:0 auto; padding:16px 20px; display:flex; align-items:center; gap:16px}
-.logo{display:flex; align-items:center; gap:10px}
-.logo img{height:64px; width:auto; display:block; object-fit:contain}
-.brand-title{font-weight:900; font-size:clamp(20px,4vw,28px); letter-spacing:.5px}
-.menu{margin-left:auto; display:flex; gap:10px}
-.menu > li{list-style:none; position:relative}
-.menu > li > a{ display:inline-flex; align-items:center; gap:8px; padding:10px 16px; font-weight:800;
-  border-radius:12px; background:#1e88e5; color:#fff; box-shadow:0 6px 16px rgba(30,136,229,.25); }
-.menu > li:hover > a{filter:brightness(1.06) saturate(1.15)}
-.sub{ position:absolute; top:56px; left:0; display:none; min-width:220px; padding:10px;
-  background:#fff; color:#111; border:1px solid var(--line); border-radius:14px; box-shadow:0 16px 40px rgba(0,0,0,.12);}
-.menu > li:hover .sub{display:block}
-.sub a{display:block; padding:10px 12px; border-radius:8px; font-weight:700}
-.sub a:hover{background:#eef5ff}
-body.dark .sub{ background:#0b0f18; color:#e8ecf3; border-color:#1a2233}
-body.dark .sub a:hover{background:#121a2b}
-main{max-width:var(--maxw); margin:28px auto 90px; padding:0 20px}
-.grid{display:grid; grid-template-columns:320px 1fr 120px; gap:24px}
-.card, .panel{background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
- box-shadow:0 8px 30px rgba(0,0,0,.08); backdrop-filter:blur(10px)}
-.left{padding:18px}
-.left h3{margin:0 0 10px 0; font-size:22px}
-.left .vip{width:100%; aspect-ratio:16/10; border-radius:12px; background:#c8ced6; display:flex; align-items:center; justify-content:center; font-weight:900}
-.center{padding:18px}
-.monitor{position:relative; width:100%; aspect-ratio:16/9; border-radius:14px; overflow:hidden;
- box-shadow:0 12px 30px rgba(0,0,0,.25); background:#000}
-.monitor video,.monitor img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
-.center .actions{display:flex; gap:16px; align-items:center; margin-top:14px}
-.btn{padding:12px 22px; border:none; border-radius:999px; font-weight:900; cursor:pointer}
-.btn-primary{ background:linear-gradient(135deg,#0091ff,#7c4dff); color:#fff; box-shadow:0 0 12px rgba(124,77,255,.55),0 0 18px rgba(0,145,255,.45);}
-.btn-primary:hover{transform:translateY(-1px) scale(1.02)}
-.badge{padding:8px 14px; border-radius:999px; background:#111; color:#fff; font-weight:800}
-.dark .badge{background:#fff; color:#111}
-.right{padding:18px; display:flex; align-items:center; justify-content:center}
-.right .hint{writing-mode:vertical-rl; transform:rotate(180deg); opacity:.7; font-weight:900}
-.bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .06s linear; z-index:-1; pointer-events:none }
-body.dark .bg-video{ opacity:1; z-index:0 }
-#bgMask{ position:fixed; inset:0; background:#000; opacity:0; pointer-events:none; z-index:1; transition:opacity .05s linear }
-/* Lightning bolt overlay (SVG external is optional) */
-#boltSvg{ position:fixed; left:0; top:0; width:40vw; max-width:720px; opacity:0; pointer-events:none; z-index:3;
-  filter: drop-shadow(0 0 14px rgba(180,220,255,.9)) drop-shadow(0 0 32px rgba(120,200,255,.8)); mix-blend-mode:screen; }
-@keyframes boltFlash { 0%{ opacity:0; transform:translate(var(--bx),var(--by)) rotate(var(--br)) scale(.95) } 12%{ opacity:1 } 28%{ opacity:.15 } 42%{ opacity:1 } 100%{ opacity:0 } }
+  :root { --blue:#4aa0e3; --deep:#2b1e4a; --gold:#ffdf6c; --text:#e9edf3; }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:#000; /* 전체 블랙 */
+    color:#fff;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Arial,sans-serif;
+  }
+
+  /* 상단 헤더(로고 스트립) */
+  .topbar{
+    background:#1a1a1a;
+    border-bottom:4px solid var(--blue);
+  }
+  .topbar .wrap{
+    max-width:1200px; margin:0 auto; padding:10px 12px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .brand-img{
+    height:56px; width:auto; display:block; object-fit:contain;
+    filter: drop-shadow(0 2px 0 rgba(0,0,0,.35));
+  }
+  .partner{
+    margin-left:6px;
+    font-weight:900; letter-spacing:1px;
+    font-size:22px; color:#b9d6ff;
+  }
+
+  /* 메뉴 스트립(파란바 + 보라보더) */
+  .menubar{
+    background:var(--blue);
+    border-bottom:10px solid var(--deep);
+    box-shadow: inset 0 -2px 0 rgba(255,255,255,.2);
+  }
+  .menubar .wrap{
+    max-width:1200px; margin:0 auto; padding:8px 12px;
+    display:flex; justify-content:center; gap:42px;
+    font-weight:900; color:#0e1330; letter-spacing:.6em;
+    text-shadow:0 1px 0 rgba(255,255,255,.35);
+  }
+  .menubar span{ white-space:nowrap; }
+
+  /* 오른쪽 가장자리 장식 이미지 */
+  .edge{
+    position:fixed; right:0; top:0; bottom:0; width:min(23vw,310px);
+    background: url("assets/edge.png") center right / cover no-repeat;
+    pointer-events:none; z-index:0;
+  }
+
+  /* 중앙 영상 카드 */
+  .stage{
+    min-height:calc(100vh - 120px);
+    display:flex; align-items:center; justify-content:center;
+    padding:60px 16px;
+    position:relative; z-index:1; /* edge 아래 깔리지 않게 */
+  }
+  .video-card{
+    width:min(70vw,740px);
+    aspect-ratio:16/9;
+    background:#111;
+    border-radius:12px;
+    border:6px solid #fff;
+    box-shadow:0 16px 40px rgba(0,0,0,.7);
+    overflow:hidden;
+  }
+  .video-card video, .video-card img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+
+  @media (max-width:900px){
+    .menubar .wrap{gap:20px; letter-spacing:.3em}
+    .brand-img{height:48px}
+    .partner{font-size:18px}
+  }
 </style>
 </head>
 <body>
-  <video id="bgVid" class="bg-video" muted playsinline loop poster="assets/bg-poster.jpg">
-    <source src="assets/bg.mp4" type="video/mp4"/>
-  </video>
-  <div id="bgMask"></div>
 
-  <!-- Inline SVG bolt (no external image dependency) -->
-  <svg id="boltSvg" viewBox="0 0 512 1024" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0%" stop-color="#c8ecff"/>
-        <stop offset="60%" stop-color="#ffffff"/>
-        <stop offset="100%" stop-color="#9bd0ff"/>
-      </linearGradient>
-    </defs>
-    <path d="M310 20 70 420h140L60 760l380-430H300L460 20z" fill="url(#g)" stroke="#e7f5ff" stroke-width="18" stroke-linejoin="round"/>
-  </svg>
+  <!-- 상단 로고 스트립 -->
+  <div class="topbar">
+    <div class="wrap">
+      <!-- 좌측 로고 이미지(캡처 같은 띠형 로고) -->
+      <img class="brand-img" src="assets/logo-strip.png" alt="BET33 로고"/>
+      <div class="partner">비공식 파트너</div>
+    </div>
+  </div>
 
-  <audio id="dj" src="assets/dj-music.mp3" preload="auto"></audio>
-  <audio id="thunder" src="assets/thunder.wav" preload="auto"></audio>
+  <!-- 파란 메뉴 바 -->
+  <div class="menubar">
+    <div class="wrap">
+      <span>비&nbsp;공&nbsp;식</span>
+      <span>이&nbsp;란</span>
+      <span>프&nbsp;로&nbsp;모&nbsp;션</span>
+      <span>문&nbsp;의</span>
+      <span>멤&nbsp;버&nbsp;십</span>
+      <span>가&nbsp;입</span>
+    </div>
+  </div>
 
-  <header>
-    <nav class="nav">
-      <div class="logo">
-        <img id="brandLogo" src="./assets/logo.png?v=12" alt="BET33">
-        <div class="brand-title">BET33 비공식 파트너</div>
-      </div>
-      <ul class="menu">
-        <li><a href="#">가입하기</a>
-          <div class="sub">
-            <a href="#">1. 기본 가입</a>
-            <a href="#">2. 축하 팝업</a>
-            <a href="#">3. 연계 페이지</a>
-          </div>
-        </li>
-        <li><a href="#">비공식 프로모션</a>
-          <div class="sub">
-            <a href="#">슬롯 3번째 충전 30%</a>
-            <a href="#">첫충전 보너스</a>
-            <a href="#">재입금 리워드</a>
-          </div>
-        </li>
-        <li><a href="#">멤버쉽 콤프카드신청</a>
-          <div class="sub">
-            <a href="#">발급 자격 안내</a>
-            <a href="#">호텔 무료 숙박 혜택</a>
-          </div>
-        </li>
-        <li><a href="#">문의</a>
-          <div class="sub">
-            <a href="#">텔레그램</a>
-            <a href="#">메일</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <!-- 오른쪽 가장자리 데코 -->
+  <div class="edge"></div>
 
-  <main>
-    <div class="grid">
-      <aside class="left card">
-        <p class="kicker">멤버쉽 콤프카드</p>
-        <h3>신청 가능</h3>
-        <div class="vip small">카드 이미지 영역</div>
-        <ul class="small">
-          <li>비공식 멤버쉽콤프카드 발급 자격 충족 시 자동 발급</li>
-          <li>미국 동부 A.C 전 카지노 호텔 프리미엄룸~스위트룸 무료 숙박</li>
-        </ul>
-      </aside>
-
-      <section class="center panel" aria-label="main showcase">
-        <div class="monitor" id="monitor">
-          <video id="heroVid" autoplay muted loop playsinline poster="assets/center-poster.jpg">
-            <source src="assets/center.mp4" type="video/mp4"/>
-          </video>
-        </div>
-        <div class="actions">
-          <button id="couponBtn" class="btn btn-primary">쿠폰 받기</button>
-          <span class="badge">히어로 16:9</span>
-          <span class="small">번개 + 스타카토 교차</span>
-        </div>
-      </section>
-
-      <aside class="right card">
-        <div class="hint">FAST PAYBET</div>
-      </aside>
+  <!-- 중앙 16:9 영상 카드 -->
+  <main class="stage">
+    <div class="video-card">
+      <!-- 없으면 poster만 보여도 됨 -->
+      <video autoplay muted loop playsinline poster="assets/center-poster.jpg">
+        <source src="assets/center.mp4" type="video/mp4"/>
+      </video>
     </div>
   </main>
 
-<script>
-const body = document.body;
-const heroVid = document.getElementById('heroVid');
-const bgVid = document.getElementById('bgVid');
-const couponBtn = document.getElementById('couponBtn');
-const bgMask = document.getElementById('bgMask');
-const dj = document.getElementById('dj');
-const thunder = document.getElementById('thunder');
-const monitor = document.getElementById('monitor');
-const bolt = document.getElementById('boltSvg');
-
-let bgMode = false;
-let flickerTimer = null;
-
-function setState(toBackground){
-  bgMode = !!toBackground;
-  if(bgMode){
-    body.classList.add('dark');
-    try{ heroVid.pause(); }catch(e){}
-    try{ bgVid.currentTime = 0; bgVid.play(); }catch(e){}
-    heroVid.style.opacity = 0;
-  }else{
-    body.classList.remove('dark');
-    try{ bgVid.pause(); }catch(e){}
-    try{ heroVid.play(); }catch(e){}
-    heroVid.style.opacity = 1;
-    hideMask();
-  }
-}
-function showMask(){ bgMask.style.opacity = 1; }
-function hideMask(){ bgMask.style.opacity = 0; }
-
-function flashBolt(){
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-  const x = Math.floor(Math.random()*vw*0.8)+vw*0.1;
-  const y = Math.floor(Math.random()*vh*0.6)+vh*0.1;
-  const r = (Math.random()*40 - 20).toFixed(1) + "deg";
-  const scale = (0.7 + Math.random()*0.6).toFixed(2);
-  bolt.style.setProperty('--bx', x+"px");
-  bolt.style.setProperty('--by', y+"px");
-  bolt.style.setProperty('--br', r);
-  bolt.style.transform = `translate(${x}px,${y}px) rotate(${r}) scale(${scale})`;
-  bolt.style.animation = 'none'; void bolt.offsetWidth;
-  bolt.style.animation = 'boltFlash 320ms ease-out';
-  try{ if(thunder){ thunder.currentTime=0; thunder.volume=0.55; thunder.play(); } }catch(e){}
-}
-
-function staccato(totalMs, steps, seq, finalToBackground){
-  if(flickerTimer) clearInterval(flickerTimer);
-  const interval = Math.max(20, Math.floor(totalMs/steps));
-  let i = 0;
-  flickerTimer = setInterval(()=>{
-    const state = seq[i % seq.length];
-    if(state === 1){
-      body.classList.add('dark'); try{ bgVid.play(); }catch(e){}
-      heroVid.style.opacity = 0;
-      showMask();
-      flashBolt();
-    }else{
-      body.classList.remove('dark'); try{ bgVid.pause(); }catch(e){}
-      heroVid.style.opacity = 1;
-      hideMask();
-    }
-    i++;
-    if(i >= steps){
-      clearInterval(flickerTimer); flickerTimer = null;
-      hideMask();
-      setState(finalToBackground);
-    }
-  }, interval);
-}
-
-function runCoupon(){
-  try{ if(dj){ dj.volume = 0.7; dj.currentTime = 0; dj.play(); } }catch(e){}
-  const toBackground = !bgMode;
-  const seq = [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0]; // 17 toggles, ~2.2s
-  staccato(2200, seq.length, seq, toBackground);
-}
-couponBtn.addEventListener('click', runCoupon);
-
-setState(false);
-
-// logo fallback
-(function(){
-  var img = document.getElementById('brandLogo');
-  if(!img) return;
-  var cands = ["./assets/logo.png?v=12","./assets/Logo.png?v=12","./assets/33LOGO.png?v=12","./assets/33logo.png?v=12"];
-  var i=0; img.onerror = function(){ i++; if(i<cands.length) img.src = cands[i]; };
-})();
-</script>
 </body>
 </html>
