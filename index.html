@@ -5,397 +5,234 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>BET33 비공식 파트너</title>
 <style>
-:root{
-  --bg:#0b0e14;
-  --panel:#11141b;
-  --glass:rgba(255,255,255,.06);
-  --line:rgba(255,255,255,.12);
-  --accent:#3ea6ff;
-  --neon:#45f3ff;
-  --neon2:#f9c80e;
-  --max:1200px;
-  --radius:16px;
-}
+:root{--max:1200px;--neon:#45f3ff}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:#000;color:#e8eef7;font-family:system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
+html,body{margin:0;height:100%;background:#000;color:#eaf2ff;font-family:system-ui,Segoe UI,Roboto,Noto Sans KR,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
 
-/* 헤더 */
-.header{position:sticky;top:0;z-index:50;background:linear-gradient(#171325,#0f0b1f);border-bottom:1px solid #2b2541}
-.header__row{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:20px;padding:10px 16px}
-.brand{display:flex;align-items:center;gap:12px}
-.brand img{height:44px}
-.brand__txt{font-weight:900;letter-spacing:.5px}
-.brand__txt .main{font-size:26px;color:#ffe36f}
-.brand__txt .sub{font-size:18px;color:#70c7ff;opacity:.9}
+/* 헤더(로고만) */
+.header{position:sticky;top:0;z-index:20;background:linear-gradient(#171325,#0f0b1f);border-bottom:1px solid #2b2541}
+.header__row{max-width:var(--max);margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+.header img{height:44px}
+.header .title{font-weight:900}
+.header .title b{font-size:26px;color:#ffe36f}
+.header .title span{display:block;font-size:18px;color:#74c6ff}
 
-/* 메인 레이아웃 */
-.container{max-width:var(--max);margin:28px auto 80px;padding:0 16px;position:relative}
-.stage{display:grid;gap:16px;justify-items:center}
+/* 무대 */
+.wrap{max-width:var(--max);margin:28px auto 80px;padding:0 16px}
 
-/* 중앙 모니터(요청 비율 70% 적용) */
-.monitor{
-  width:min(70vw, var(--max));
-  max-width:980px;
-  aspect-ratio:16/9;
-  border-radius:14px;
-  background:#121418;
-  border:2px solid rgba(255,255,255,.7);
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-  overflow:hidden;
-  position:relative;
-}
-.monitor video, .monitor img{width:100%;height:100%;object-fit:cover;display:block}
-.monitor--off::after{
-  content:"";
-  position:absolute;inset:0;background:#000;
-}
+/* 모니터(요청대로 70% 비율) */
+.monitor{width:min(70vw,var(--max));max-width:980px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.7);box-shadow:0 10px 30px rgba(0,0,0,.5);background:#121418;margin:0 auto;position:relative}
+.monitor video,.monitor img{width:100%;height:100%;object-fit:cover;display:block}
+.monitor--off::after{content:"";position:absolute;inset:0;background:#000}
 
-/* 배경 영상(교차 때만 보여줌) */
-.bg-wrap{position:fixed;inset:0;z-index:-1;background:#000}
-.bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .2s}
-.bg-on .bg-video{opacity:1}
+/* 배경 교차용 */
+.bg{position:fixed;inset:0;z-index:-1;background:#000}
+.bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .2s}
+.bg.on video{opacity:1}
 
-/* 버튼 6개 – 금속 + 네온 테두리 */
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(70vw, var(--max));max-width:980px}
-.btn{
-  position:relative;
-  border:none;
-  border-radius:14px;
-  padding:16px 14px;
-  font-weight:900;
-  font-size:18px;
-  letter-spacing:.4px;
-  color:#eaf6ff;
-  background:linear-gradient(145deg,#2a3b4a,#0e1a24 55%,#122a3c);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 8px 18px rgba(0,0,0,.45);
-  cursor:pointer;
-  transition:transform .08s ease, filter .08s ease, background .2s ease;
-  outline:2px solid rgba(69,243,255,.0);
-}
+/* 6개 버튼 (금속 + 네온테두리 반응) */
+.actions{width:min(70vw,var(--max));max-width:980px;margin:14px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.btn{position:relative;border:none;border-radius:14px;padding:16px 14px;font-weight:900;font-size:18px;letter-spacing:.3px;color:#eaf6ff;background:linear-gradient(145deg,#2a3b4a,#0e1a24 55%,#122a3c);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 18px rgba(0,0,0,.45);cursor:pointer;transition:transform .08s,filter .08s}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(0);filter:brightness(.9)}
-.btn.neon{
-  outline:2px solid rgba(69,243,255,.55);
-  box-shadow:0 0 10px var(--neon), 0 0 30px rgba(69,243,255,.35), inset 0 0 15px rgba(69,243,255,.12);
-}
-.btn.translucent{background:rgba(20,30,45,.55)}
+.btn.trans{background:rgba(20,30,45,.55)}
+.btn.neon{outline:2px solid rgba(69,243,255,.55);box-shadow:0 0 10px var(--neon),0 0 30px rgba(69,243,255,.35),inset 0 0 15px rgba(69,243,255,.12)}
 
-/* 카드 6개 설명(하단) – 요청으로 6개만 유지 */
-.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(70vw, var(--max));max-width:980px;margin-top:8px}
-.card{
-  padding:14px;border-radius:12px;background:linear-gradient(180deg,#141a22,#0e141b);
-  border:1px solid #1f2a38;color:#cfe4ff;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)
-}
+/* 하단 6개 카드 */
+.cards{width:min(70vw,var(--max));max-width:980px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px auto 0}
+.card{padding:14px;border-radius:12px;background:linear-gradient(180deg,#141a22,#0e141b);border:1px solid #1f2a38;color:#cfe4ff;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
 .card h4{margin:0 0 6px 0;font-size:15px}
 .card p{margin:0;font-size:13px;opacity:.8}
 
-/* 프로모션 슬라이더(모니터 위로 표시) */
-.promo{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#000}
-.promo.on{display:flex}
-.promo__slide{position:absolute;inset:0;display:grid;place-items:center;padding:14px}
-.promo__slide img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 12px 30px rgba(0,0,0,.7))}
-.promo__caption{
-  position:absolute;bottom:10px;left:0;right:0;text-align:center;
-  font-weight:800;letter-spacing:.3px;color:#fff;background:linear-gradient(90deg,transparent,#0008,transparent);
-  padding:6px 10px
-}
-.promo.off-effect{animation:crtOff .35s ease forwards}
-.promo.on-effect{animation:crtOn .35s ease forwards}
-@keyframes crtOff{
-  0%{transform:scaleY(1);opacity:1}
-  90%{transform:scaleY(.02);opacity:.7;filter:brightness(2)}
-  100%{transform:scaleY(0);opacity:0}
-}
-@keyframes crtOn{
-  0%{transform:scaleY(0);opacity:0}
-  20%{transform:scaleY(.02);opacity:.8;filter:brightness(2)}
-  100%{transform:scaleY(1);opacity:1}
-}
+/* 프로모션 오버레이(전원 꺼짐/들어옴) */
+.promo{position:absolute;inset:0;display:none;place-items:center;background:#000}
+.promo.on{display:grid}
+.promo img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 12px 30px rgba(0,0,0,.7))}
+.promo.off{animation:off .35s ease forwards}
+.promo.onfx{animation:on .35s ease forwards}
+@keyframes off{0%{transform:scaleY(1);opacity:1}90%{transform:scaleY(.02);opacity:.7;filter:brightness(2)}100%{transform:scaleY(0);opacity:0}}
+@keyframes on{0%{transform:scaleY(0);opacity:0}20%{transform:scaleY(.02);opacity:.8;filter:brightness(2)}100%{transform:scaleY(1);opacity:1}}
 
-/* 모달(가입 → 선호도 설문) */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;z-index:60}
+/* 모달(가입/설문) */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;z-index:30}
 .modal.on{display:grid}
 .sheet{width:min(720px,92vw);background:#0e1320;border:1px solid #24304a;border-radius:16px;padding:18px 16px;color:#dfe9ff}
-.sheet h3{margin:0 0 12px 0}
-.sheet .row{display:grid;grid-template-columns:120px 1fr;gap:10px;margin:10px 0}
-.sheet input,.sheet select,.sheet textarea{
-  width:100%;padding:10px 12px;border-radius:10px;border:1px solid #31445f;background:#0b1220;color:#e6f0ff
-}
-.sheet .bar{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+.sheet h3{margin:0 0 12px}
+.row{display:grid;grid-template-columns:120px 1fr;gap:10px;margin:10px 0}
+input,select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #31445f;background:#0b1220;color:#e6f0ff}
+.bar{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
 .small{font-size:12px;opacity:.75}
-
-/* 유틸 */
-.hide{display:none !important}
-.center{text-align:center}
-.hr{height:1px;background:#28334a;margin:12px 0}
 </style>
 </head>
 <body>
 
-<!-- 배경(초기에는 숨김) -->
-<div class="bg-wrap" id="bgWrap">
-  <video id="bgVid" class="bg-video" muted playsinline></video>
-</div>
+<!-- 배경(초기 비활성) -->
+<div class="bg" id="bg"><video id="bgVid" muted playsinline></video></div>
 
 <header class="header">
   <div class="header__row">
-    <div class="brand">
-      <img src="assets/로고.png" alt="BET33 Logo"/>
-      <div class="brand__txt">
-        <div class="main">BET33</div>
-        <div class="sub">비공식 파트너</div>
-      </div>
-    </div>
-    <!-- 우측 메뉴는 요청대로 제거 -->
+    <img src="assets/로고.png" alt="BET33"/>
+    <div class="title"><b>BET33</b><span>비공식 파트너</span></div>
   </div>
 </header>
 
-<main class="container">
-  <section class="stage">
-
-    <!-- 중앙 모니터 -->
-    <div class="monitor" id="monitor">
-      <video id="centerVid" autoplay muted loop playsinline poster="assets/center-poster.jpg">
-        <source src="assets/center.mp4" type="video/mp4"/>
-      </video>
-
-      <!-- 프로모션(모니터 전원 꺼지는 연출 후 슬라이더) -->
-      <div class="promo" id="promoBox">
-        <div class="promo__slide"><img id="promoImg" src="assets/PRO1.png" alt="프로모션"/></div>
-        <div class="promo__caption" id="promoCap">진행중 이벤트 미리보기</div>
-      </div>
+<main class="wrap">
+  <!-- 중앙 모니터 -->
+  <div class="monitor" id="monitor">
+    <video id="centerVid" autoplay muted loop playsinline>
+      <!-- 영문 / 한글 파일명 모두 지원 -->
+      <source src="assets/center.mp4" type="video/mp4"/>
+      <source src="assets/센터.mp4" type="video/mp4"/>
+    </video>
+    <div class="promo" id="promo">
+      <img id="promoImg" src="assets/PRO1.png" alt="프로모션">
     </div>
+  </div>
 
-    <!-- 6개 버튼 -->
-    <div class="actions">
-      <button class="btn" id="btnJoin">가입하기</button>
-      <button class="btn" id="btnCoupon">쿠폰 신청하기</button>
-      <button class="btn" id="btnPromo">프로모션</button>
-      <button class="btn" id="btnParticipate">참여</button>
-      <button class="btn" id="btnEmergency">긴급쿠폰 신청</button>
-      <button class="btn" id="btnContact">문의</button>
-    </div>
+  <!-- 6개 버튼 -->
+  <div class="actions" id="actions">
+    <button class="btn" id="bJoin">가입하기</button>
+    <button class="btn" id="bCoupon">쿠폰 신청하기</button>
+    <button class="btn" id="bPromo">프로모션</button>
+    <button class="btn" id="bParticipate">참여</button>
+    <button class="btn" id="bEmergency">긴급쿠폰 신청</button>
+    <button class="btn" id="bContact">문의</button>
+  </div>
 
-    <!-- 하단 6개 카드 -->
-    <div class="info">
-      <div class="card"><h4>첫충전 보너스</h4><p>첫 입금 이용자를 위한 기본 혜택.</p></div>
-      <div class="card"><h4>재입금 리워드</h4><p>지속 이용자를 위한 리텐션 설계.</p></div>
-      <div class="card"><h4>페이백/최대출금</h4><p>규정은 사전 고지 기준으로 안내.</p></div>
-      <div class="card"><h4>비공식 파트너 프로그램</h4><p>선호도 맞춤 프로모션 큐레이션.</p></div>
-      <div class="card"><h4>투명한 가이드</h4><p>핵심 정보만 간결하게 제공.</p></div>
-      <div class="card"><h4>빠른 문의</h4><p>이메일/메신저 채널 운영.</p></div>
-    </div>
-
-  </section>
+  <!-- 하단 카드 6개 -->
+  <div class="cards">
+    <div class="card"><h4>첫충전 보너스</h4><p>첫 입금 이용자를 위한 기본 혜택.</p></div>
+    <div class="card"><h4>재입금 리워드</h4><p>지속 이용자를 위한 리텐션 설계.</p></div>
+    <div class="card"><h4>페이백/최대출금</h4><p>규정은 사전 고지 기준으로 안내.</p></div>
+    <div class="card"><h4>비공식 파트너 프로그램</h4><p>선호도 맞춤 큐레이션.</p></div>
+    <div class="card"><h4>투명한 가이드</h4><p>핵심만 간결하게 제공.</p></div>
+    <div class="card"><h4>빠른 문의</h4><p>이메일/메신저 채널 운영.</p></div>
+  </div>
 </main>
 
-<!-- 가입 모달 -->
-<div class="modal" id="joinModal" aria-hidden="true">
-  <div class="sheet">
-    <h3>회원가입 (빠른 등록)</h3>
-    <div class="row"><label>아이디</label><input id="fId" placeholder="영문/숫자"/></div>
-    <div class="row"><label>비밀번호</label><input id="fPw" type="password" placeholder="8자 이상"/></div>
-    <div class="row"><label>성함</label><input id="fName" placeholder="홍길동"/></div>
-    <div class="row"><label>연락처</label><input id="fPhone" placeholder="010-0000-0000"/></div>
-    <div class="bar">
-      <button class="btn translucent" id="closeJoin">닫기</button>
-      <button class="btn neon" id="nextSurvey">다음(선호도 설문)</button>
-    </div>
-    <div class="small">※ 실제 가입 처리는 운영 채널을 통해 연결됩니다.</div>
-  </div>
-</div>
+<!-- 가입/설문 모달 -->
+<div class="modal" id="mJoin"><div class="sheet">
+  <h3>회원가입 (빠른 등록)</h3>
+  <div class="row"><label>아이디</label><input placeholder="영문/숫자"/></div>
+  <div class="row"><label>비밀번호</label><input type="password" placeholder="8자 이상"/></div>
+  <div class="row"><label>성함</label><input placeholder="홍길동"/></div>
+  <div class="row"><label>연락처</label><input placeholder="010-0000-0000"/></div>
+  <div class="bar"><button class="btn trans" id="xJoin">닫기</button><button class="btn neon" id="goSurvey">다음(선호도)</button></div>
+  <div class="small">※ 실제 처리는 운영 채널을 통해 안내됩니다.</div>
+</div></div>
 
-<!-- 설문 모달 -->
-<div class="modal" id="surveyModal" aria-hidden="true">
-  <div class="sheet">
-    <h3>선호도 체크</h3>
-    <div class="row"><label>주 이용 게임</label>
-      <select id="sGame">
-        <option>슬롯</option><option>카지노</option><option>스포츠</option>
-      </select>
-    </div>
-    <div class="row"><label>주 이용 빈도</label>
-      <select id="sFreq">
-        <option>2~3회/주</option><option>4~6회/주</option><option>매일</option>
-      </select>
-    </div>
-    <div class="row"><label>1회 충전액</label>
-      <select id="sAmt">
-        <option>5만원~10만원</option><option>10만원~20만원</option><option>20만원 이상</option>
-      </select>
-    </div>
-    <div class="row"><label>소식 알림</label>
-      <select id="sNews"><option>필요 없음</option><option>필요할 때</option><option>원함</option></select>
-    </div>
-    <div class="row" style="grid-template-columns:1fr">
-      <textarea id="sEtc" rows="4" placeholder="추가 메모(선택)"></textarea>
-    </div>
-    <div class="bar">
-      <button class="btn translucent" id="backJoin">이전</button>
-      <button class="btn neon" id="submitAll">제출</button>
-    </div>
-  </div>
-</div>
+<div class="modal" id="mSurvey"><div class="sheet">
+  <h3>선호도 체크</h3>
+  <div class="row"><label>주 이용</label><select><option>슬롯</option><option>카지노</option><option>스포츠</option></select></div>
+  <div class="row"><label>이용 빈도</label><select><option>2~3회/주</option><option>4~6회/주</option><option>매일</option></select></div>
+  <div class="row"><label>1회 충전액</label><select><option>5~10만원</option><option>10~20만원</option><option>20만원+</option></select></div>
+  <div class="row" style="grid-template-columns:1fr"><textarea rows="4" placeholder="메모(선택)"></textarea></div>
+  <div class="bar"><button class="btn trans" id="backJoin">이전</button><button class="btn neon" id="okSubmit">제출</button></div>
+</div></div>
 
 <script>
-/* 요소 */
-const body = document.body;
+/* ---------- 유틸: 소스 폴백 재생 ---------- */
+function playWithFallback(videoEl, sources, {loop=true, muted=true}={}){
+  videoEl.loop = loop;
+  videoEl.muted = muted;
+  let i = 0;
+  function tryNext(){
+    if(i >= sources.length){ console.warn('no playable src', sources); return; }
+    const src = sources[i++];
+    videoEl.src = src;
+    videoEl.load();
+    const onCan = ()=>{ videoEl.play().catch(()=>{}); cleanup(); };
+    const onErr = ()=>{ cleanup(); tryNext(); };
+    function cleanup(){ videoEl.removeEventListener('canplay', onCan); videoEl.removeEventListener('error', onErr); }
+    videoEl.addEventListener('canplay', onCan, {once:true});
+    videoEl.addEventListener('error', onErr, {once:true});
+  }
+  tryNext();
+}
+
+/* ---------- 요소 ---------- */
+const bg = document.getElementById('bg');
+const bgVid = document.getElementById('bgVid');
 const monitor = document.getElementById('monitor');
 const centerVid = document.getElementById('centerVid');
-const bgWrap = document.getElementById('bgWrap');
-const bgVid = document.getElementById('bgVid');
-
-const btnJoin = document.getElementById('btnJoin');
-const btnCoupon = document.getElementById('btnCoupon');
-const btnPromo = document.getElementById('btnPromo');
-const btnEmergency = document.getElementById('btnEmergency');
-const btnParticipate = document.getElementById('btnParticipate');
-const btnContact = document.getElementById('btnContact');
-
-const promoBox = document.getElementById('promoBox');
+const promo = document.getElementById('promo');
 const promoImg = document.getElementById('promoImg');
-const promoCap = document.getElementById('promoCap');
+const actions = document.getElementById('actions');
 
-/* 모달 */
-const joinModal = document.getElementById('joinModal');
-const surveyModal = document.getElementById('surveyModal');
-const nextSurvey = document.getElementById('nextSurvey');
-const closeJoin = document.getElementById('closeJoin');
-const backJoin = document.getElementById('backJoin');
-const submitAll = document.getElementById('submitAll');
+/* 시작: 중앙 모니터만 재생 (영문/한글 파일명 폴백) */
+playWithFallback(centerVid, ['assets/center.mp4','assets/센터.mp4'], {loop:true, muted:true});
 
-/* 초기 상태: 배경 영상 숨김, 중앙 모니터만 재생 */
-function init(){
-  bgWrap.classList.remove('bg-on');
-  bgVid.pause();
-  centerVid.loop = true;
-  centerVid.play().catch(()=>{});
-}
-init();
+/* 혹시 레이아웃에 예전 버튼이 남아 있으면 6개만 강제 유지 */
+while(actions.children.length > 6){ actions.lastElementChild.remove(); }
 
-/* 버튼 공통: 클릭 시 살짝 반투명 + 네온 외곽 깜빡임 */
+/* 버튼 시각 반응 */
 document.querySelectorAll('.btn').forEach(b=>{
-  b.addEventListener('mousedown',()=>{ b.classList.add('translucent','neon'); });
-  b.addEventListener('mouseup',()=>{ setTimeout(()=>b.classList.remove('translucent','neon'),180); });
+  b.addEventListener('mousedown', ()=> b.classList.add('trans','neon'));
+  b.addEventListener('mouseup', ()=> setTimeout(()=>b.classList.remove('trans','neon'),180));
 });
 
-/* 교차(배경<->중앙) 플리커 연출 */
-function crossPlay(bgSrc, durationMs=5000){
-  // 배경 준비
-  bgVid.src = bgSrc;
-  bgVid.currentTime = 0;
-  bgVid.muted = true;
-  bgVid.play().catch(()=>{});
-  bgWrap.classList.add('bg-on');
-
-  // 중앙은 잠시 멈춤(검은 화면)
+/* 배경<->중앙 교차 재생 */
+function crossPlay(srcArray, duration=6000){
+  playWithFallback(bgVid, srcArray, {loop:false, muted:true});
+  bg.classList.add('on');
   centerVid.pause();
   monitor.classList.add('monitor--off');
 
-  // 1-2-1-2 엇박 플리커
-  const seq = [];
-  const step = 120; // 0.12초
-  const totalSteps = Math.floor(durationMs / step);
-  for(let i=0;i<totalSteps;i++){ seq.push(i%2); }
+  // 엇박 플리커
+  const step = 120;
+  const total = Math.floor(duration/step);
   let i=0;
-  const t = setInterval(()=>{
-    const s = seq[i];
-    if(s===0){ // 중앙 off, 배경 on (이미 on)
-      monitor.classList.add('monitor--off');
-    }else{     // 중앙 on(검정 off), 배경 on 유지
-      monitor.classList.remove('monitor--off');
-    }
-    if(++i>=seq.length){ clearInterval(t); finish(); }
+  const tm = setInterval(()=>{
+    if(i%2===0){ monitor.classList.add('monitor--off'); }
+    else{ monitor.classList.remove('monitor--off'); }
+    if(++i>=total){ clearInterval(tm); finish(); }
   }, step);
 
   function finish(){
-    // 원복: 배경 끄고 중앙 다시 재생
-    bgVid.pause();
-    bgWrap.classList.remove('bg-on');
+    bgVid.pause(); bg.classList.remove('on');
     monitor.classList.remove('monitor--off');
-    centerVid.currentTime = 0;
-    centerVid.play().catch(()=>{});
+    centerVid.currentTime=0; centerVid.play().catch(()=>{});
   }
 }
 
-/* 쿠폰 신청하기 → coupon-bg.mp4 교차 */
-btnCoupon.addEventListener('click', ()=>{
-  crossPlay('assets/coupon-bg.mp4', 6000); // 필요시 길이 조절
-});
+/* 쿠폰/긴급 트리거 */
+document.getElementById('bCoupon').onclick = ()=> crossPlay(['assets/coupon-bg.mp4','assets/쿠폰-bg.mp4'], 6000);
+document.getElementById('bEmergency').onclick = ()=> crossPlay(['assets/emergency-bg.mp4'], 6000);
 
-/* 긴급쿠폰 신청 → emergency-bg.mp4 교차 */
-btnEmergency.addEventListener('click', ()=>{
-  crossPlay('assets/emergency-bg.mp4', 6000);
-});
-
-/* 프로모션: 모니터 전원 꺼지는 연출 후 슬라이더 */
-const promos = [
-  {src:'assets/PRO1.png', cap:'프로모션 #1'},
-  {src:'assets/PRO2.png', cap:'프로모션 #2'},
-  {src:'assets/PRO3.png', cap:'프로모션 #3'}
-];
-let promoIdx = 0, promoTimer=null;
-
+/* 프로모션: 모니터 off → 배너 슬라이드 → 다시 클릭 시 복귀 */
+const promoList = ['assets/PRO1.png','assets/PRO2.png','assets/PRO3.png'];
+let pIdx=0, pTimer=null;
 function showPromo(){
-  // 전원 OFF 효과
-  promoBox.classList.add('on-effect');
-  promoBox.classList.add('on');
-  monitor.classList.add('monitor--off');
-  centerVid.pause();
-
-  function startSlides(){
-    function render(){
-      const p = promos[promoIdx%promos.length];
-      promoImg.src = p.src;
-      promoCap.textContent = p.cap + ' — 클릭하면 상세 확대';
-      promoIdx++;
-    }
-    render();
-    promoTimer = setInterval(render, 5000);
-  }
-  setTimeout(startSlides, 380);
+  centerVid.pause(); monitor.classList.add('monitor--off');
+  promo.classList.add('onfx'); promo.classList.add('on');
+  const render = ()=>{ promoImg.src = promoList[pIdx%promoList.length]; pIdx++; };
+  render(); pTimer = setInterval(render, 5000);
 }
 function hidePromo(){
-  if(promoTimer) clearInterval(promoTimer);
-  promoBox.classList.add('off-effect');
-  setTimeout(()=>{
-    promoBox.classList.remove('off-effect','on-effect','on');
-    monitor.classList.remove('monitor--off');
-    centerVid.play().catch(()=>{});
-  }, 360);
+  clearInterval(pTimer);
+  promo.classList.add('off');
+  setTimeout(()=>{ promo.classList.remove('off','on','onfx'); monitor.classList.remove('monitor--off'); centerVid.play().catch(()=>{}); }, 360);
 }
-btnPromo.addEventListener('click', ()=>{
-  if(promoBox.classList.contains('on')) hidePromo(); else showPromo();
-});
-promoBox.addEventListener('click', ()=>{
-  // 배너 확대(홀로그램 느낌 간단 연출)
+document.getElementById('bPromo').onclick = ()=> promo.classList.contains('on') ? hidePromo() : showPromo();
+promo.onclick = ()=>{ // 살짝 확대 연출
   promoImg.style.transition='transform .25s ease, filter .25s ease';
-  promoImg.style.transform='scale(1.08)';
-  promoImg.style.filter='drop-shadow(0 20px 40px rgba(69,243,255,.45))';
-  setTimeout(()=>{
-    promoImg.style.transform='scale(1)';
-    promoImg.style.filter='';
-  }, 250);
-});
+  promoImg.style.transform='scale(1.08)'; promoImg.style.filter='drop-shadow(0 20px 40px rgba(69,243,255,.45))';
+  setTimeout(()=>{ promoImg.style.transform=''; promoImg.style.filter=''; },250);
+};
 
 /* 가입/설문 모달 */
-btnJoin.addEventListener('click', ()=> joinModal.classList.add('on'));
-closeJoin.addEventListener('click', ()=> joinModal.classList.remove('on'));
-nextSurvey.addEventListener('click', ()=>{
-  joinModal.classList.remove('on'); surveyModal.classList.add('on');
-});
-backJoin.addEventListener('click', ()=>{
-  surveyModal.classList.remove('on'); joinModal.classList.add('on');
-});
-submitAll.addEventListener('click', ()=>{
-  surveyModal.classList.remove('on');
-  alert('제출 완료! 담당자가 확인 후 안내 드립니다.');
-});
+const mJoin = document.getElementById('mJoin');
+const mSurvey = document.getElementById('mSurvey');
+document.getElementById('bJoin').onclick = ()=> mJoin.classList.add('on');
+document.getElementById('xJoin').onclick = ()=> mJoin.classList.remove('on');
+document.getElementById('goSurvey').onclick = ()=>{ mJoin.classList.remove('on'); mSurvey.classList.add('on'); };
+document.getElementById('backJoin').onclick = ()=>{ mSurvey.classList.remove('on'); mJoin.classList.add('on'); };
+document.getElementById('okSubmit').onclick = ()=>{ mSurvey.classList.remove('on'); alert('제출 완료! 담당자가 확인 후 안내 드립니다.'); };
 
-/* 기타 버튼(참여/문의) – 자리표시 */
-btnParticipate.addEventListener('click', ()=> alert('참여: 준비중'));
-btnContact.addEventListener('click', ()=> alert('문의: 메신저/이메일로 연락주세요'));
+/* 자리표시 */
+document.getElementById('bParticipate').onclick = ()=> alert('참여: 준비중');
+document.getElementById('bContact').onclick = ()=> alert('문의: 메신저/이메일로 연락주세요');
 </script>
 </body>
 </html>
