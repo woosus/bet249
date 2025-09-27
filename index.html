@@ -4,160 +4,196 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>BET33</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --maxw: 1200px;
-    --glass: rgba(255,255,255,.75);
-    --line: rgba(0,0,0,.08);
-    --text: #111;
-    --radius: 16px;
-    --sky: #67c7ff;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; color:var(--text);
-    background: linear-gradient(135deg,#ffffff 0%,#f8fbff 50%,#f3f8ff 100%);
-    font-family: "Pretendard", system-ui, -apple-system, "Noto Sans KR", Arial, sans-serif;
-    min-height:100vh; transition: background .35s ease, color .35s ease;
-  }
-  /* 다크(배경 영상) 상태 */
-  body.storm{ background:#06080f; color:#e8ecf3; }
+:root{
+  --radius:16px;
+  --glass:rgba(255,255,255,.65);
+  --line:rgba(0,0,0,.08);
+  --text:#111;
+  --maxw:1200px;
+  --ink:#0e1021;
+  --brand:#ffd95e;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--text);
+  background:#ffffff;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+  min-height:100vh;
+  transition: background .25s ease, color .25s ease;
+}
+body.storm{ background:#06080f; color:#e8ecf3; }
 
-  /* Header */
-  header{ position:sticky; top:0; z-index:20; background:var(--glass);
-          border-bottom:1px solid var(--line); backdrop-filter: blur(12px); }
-  .wrap{ max-width:var(--maxw); margin:0 auto; padding:14px 20px; display:flex; gap:16px; align-items:center; }
-  .brand{ font-weight:800; font-size:28px; letter-spacing:.6px }
-  nav{ margin-left:auto; display:flex; gap:18px; font-weight:700; opacity:.7 }
+/* HEADER */
+header{
+  position:sticky; top:0; z-index:30;
+  backdrop-filter: blur(10px);
+  background:linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.55));
+  border-bottom:1px solid var(--line);
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:16px;}
+.brand-logo{
+  height:64px; width:auto; display:block; object-fit:contain;
+  image-rendering:-webkit-optimize-contrast;
+}
+@media (max-width:900px){ .brand-logo{height:44px} }
 
-  /* Hero section */
-  main{ max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; }
-  .hero{ position:relative; border-radius:var(--radius); border:1px solid var(--line);
-         background:var(--glass); box-shadow:0 8px 30px rgba(0,0,0,.08); padding:22px; }
-  .frame{ width:min(75vw,900px); margin:0 auto; border-radius:14px; overflow:hidden;
-          box-shadow:0 10px 28px rgba(0,0,0,.25); background:#000; }
-  /* 16:9 보장 */
-  .frame > .ratio{ position:relative; width:100%; padding-top:56.25%; }
-  .frame video, .frame img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .hero.blackout .frame{ background:#000; }
-  .hero.blackout video{ opacity:0 }
+.nav{
+  margin-left:auto; display:flex; gap:18px; font-weight:800; letter-spacing:.04em;
+  color:#334155; opacity:.9;
+}
+.nav a{ text-decoration:none; color:inherit; padding:6px 10px; border-radius:10px }
+.nav a:hover{ background:rgba(0,0,0,.06) }
 
-  /* 쿠폰 버튼 */
-  .cta{ display:flex; justify-content:center; margin-top:16px }
-  .coupon{
-    appearance:none; border:0; cursor:pointer; font-weight:800;
-    padding:14px 24px; border-radius:12px; font-size:18px;
-    color:#fff; background:#3b82f6; box-shadow:0 8px 20px rgba(59,130,246,.35);
-    transition:transform .08s ease, box-shadow .2s ease, background .2s ease;
-  }
-  .coupon:hover{ transform:translateY(-1px); background:#2f74ea }
-  .coupon:active{ transform:translateY(1px); box-shadow:0 4px 12px rgba(59,130,246,.35) }
+/* SWITCH BUTTON (쿠폰 받기) */
+.coupon-bar{
+  position:fixed; right:18px; top:110px; z-index:35;
+  display:flex; flex-direction:column; align-items:end; gap:6px;
+}
+.coupon-btn{
+  appearance:none; border:none; cursor:pointer;
+  background:#3b82f6; color:#fff; font-weight:900; letter-spacing:.04em;
+  padding:14px 22px; border-radius:14px; box-shadow:0 10px 24px rgba(59,130,246,.35);
+  transition:transform .06s ease, box-shadow .2s ease, filter .2s ease;
+}
+.coupon-btn:hover{ transform:translateY(-1px); box-shadow:0 16px 32px rgba(59,130,246,.45) }
+.coupon-btn:active{ transform:translateY(0) scale(.98); filter:brightness(.96) }
+.coupon-note{ font-size:12px; opacity:.6; color:#0f172a; text-align:right }
 
-  /* 카드 3개 (하단) */
-  .row{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
-  .card{ background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
-         padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px); }
-  .card h3{ margin:0 0 8px; font-size:18px }
+/* MAIN */
+main{max-width:var(--maxw); margin:28px auto 80px; padding:0 20px; display:grid; gap:24px; position:relative;}
+.hero{
+  position:relative; border-radius:var(--radius);
+  padding:22px; background:rgba(0,0,0,.04); border:1px solid var(--line);
+  box-shadow:0 8px 28px rgba(0,0,0,.08);
+}
+.frame{
+  /* 16:9 고정 박스 */
+  position:relative; width:min(820px, 92%); margin:0 auto; border-radius:18px; overflow:hidden;
+  background:#16181d;
+  aspect-ratio:16/9;
+  box-shadow:0 10px 30px rgba(0,0,0,.35), 0 0 0 2px rgba(255,255,255,.6) inset;
+}
+.frame video, .frame img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.blackout .frame{ background:#000 }
+.overlayTxt{ text-align:center; margin-top:12px; font-weight:800; font-size:clamp(18px,3vw,26px); color:#334155 }
+.blackout .overlayTxt{ color:#cbd5e1 }
 
-  /* 배경 비디오 (storm 모드에서만 보임) */
-  .bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover;
-             opacity:0; transition:opacity .15s linear; z-index:-1; pointer-events:none; }
-  body.bg-on .bg-video{ opacity:1; z-index:0 }
+/* Background video (dark mode only) */
+.bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .12s linear; z-index:-1; pointer-events:none; }
+.bg-on .bg-video{ opacity:1; z-index:0 }
 
-  /* 반응형 */
-  @media (max-width:900px){ .frame{ width:92% } .row{ grid-template-columns:1fr } }
+/* cards */
+.row{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.card{ background:linear-gradient(180deg,rgba(255,255,255,.7), rgba(255,255,255,.55)); border:1px solid var(--line); border-radius:var(--radius);
+       padding:18px; box-shadow:0 8px 28px rgba(0,0,0,.08); backdrop-filter: blur(10px);}
+.card h3{margin:0 0 8px 0; font-size:18px}
+.card p{margin:0; opacity:.8}
+
+footer{margin:60px 0 40px; text-align:center; opacity:.5; font-size:12px}
 </style>
 </head>
 <body>
-  <!-- 배경 영상 -->
+  <!-- 배경 영상(어둡게 전환 시 노출) -->
   <video id="bgVid" class="bg-video" muted playsinline loop poster="assets/bg-poster.jpg">
-    <source src="assets/bg.mp4" type="video/mp4"/>
+    <source src="assets/bg.mp4" type="video/mp4" />
   </video>
 
-  <!-- 효과음 -->
+  <!-- 사운드 -->
   <audio id="thunder" src="assets/thunder.wav" preload="auto"></audio>
-  <audio id="dj" src="assets/dj.mp3" preload="auto"></audio>
+  <audio id="dj" src="assets/dj-music.mp3" preload="auto"></audio>
 
+  <!-- 헤더 -->
   <header>
     <div class="wrap">
-      <div class="brand">BET33</div>
-      <nav>히어로 / 이벤트 / 문의</nav>
+      <img src="assets/logo.png?v=3" alt="BET33" class="brand-logo" />
+      <nav class="nav" aria-label="top">
+        <a href="#hero">히어로</a>
+        <a href="#promo">프로모션</a>
+        <a href="#about">비공식이란</a>
+        <a href="#contact">문의</a>
+      </nav>
     </div>
   </header>
 
+  <!-- 쿠폰 버튼 -->
+  <div class="coupon-bar">
+    <button id="coupon" class="coupon-btn" type="button">쿠폰 받기</button>
+    <div class="coupon-note">버튼 클릭 시 1.5초 스타카토 전환 + 사운드 (볼륨 70%)</div>
+  </div>
+
   <main>
-    <!-- 히어로(중앙 16:9) -->
     <section id="hero" class="hero">
       <div class="frame">
-        <div class="ratio">
-          <video id="heroVid" autoplay muted loop playsinline poster="assets/center-poster.jpg">
-            <source src="assets/center.mp4" type="video/mp4"/>
-          </video>
-        </div>
+        <video id="heroVid" autoplay muted loop playsinline poster="assets/center-poster.jpg">
+          <source src="assets/center.mp4" type="video/mp4" />
+        </video>
       </div>
-      <div class="cta"><button id="couponBtn" class="coupon">쿠폰 받기</button></div>
+      <div class="overlayTxt">중앙 영상 (16:9)</div>
     </section>
 
-    <section class="row">
+    <section id="promo" class="row">
       <div class="card"><h3>첫충전 보너스</h3><p>첫 입금 이용자를 위한 기본 혜택.</p></div>
       <div class="card"><h3>재입금 리워드</h3><p>지속 이용자를 위한 리텐션 설계.</p></div>
-      <div class="card"><h3>페이백/최대출금</h3><p>리스크·한도 규정은 사전 고지 기준으로 안내.</p></div>
+      <div class="card"><h3>페이백/최대출금</h3><p>규정은 사전 고지 기준으로 안내.</p></div>
+    </section>
+
+    <section id="about" class="row">
+      <div class="card"><h3>비공식 파트너 프로그램</h3><p>고객 선호도에 맞춘 프로모션 큐레이션.</p></div>
+      <div class="card"><h3>투명한 가이드</h3><p>핵심 정보만 간결하게 제공.</p></div>
+      <div class="card"><h3>빠른 문의</h3><p id="contact">이메일/메신저 문의 채널 운영.</p></div>
     </section>
   </main>
 
+  <footer>© BET33</footer>
+
 <script>
-  const body = document.body;
-  const hero = document.getElementById('hero');
-  const heroVid = document.getElementById('heroVid');
-  const bgVid   = document.getElementById('bgVid');
-  const thunder = document.getElementById('thunder');
-  const dj      = document.getElementById('dj');
-  const btn     = document.getElementById('couponBtn');
+const body = document.body;
+const heroSec = document.getElementById('hero');
+const heroVid = document.getElementById('heroVid');
+const bgVid   = document.getElementById('bgVid');
+const thunder = document.getElementById('thunder');
+const dj      = document.getElementById('dj');
+const coupon  = document.getElementById('coupon');
 
-  // 현재 상태: false(중앙 재생) / true(배경 재생)
-  let storm = false;
+let inBackground = false;
 
-  function setState(toBackground){
-    if(toBackground){
-      hero.classList.add('blackout');          // 중앙은 검정
-      if(heroVid) heroVid.pause();             // 중앙 비디오는 멈춤
-      body.classList.add('bg-on','storm');     // 다크 + 배경 영상
-      if(bgVid){ try{ bgVid.currentTime=0; }catch(e){} bgVid.play(); }
-    }else{
-      hero.classList.remove('blackout');
-      if(heroVid) heroVid.play();
-      body.classList.remove('bg-on','storm');
-      if(bgVid) bgVid.pause();
-    }
+/* 상태 적용: toBackground = true면 배경 영상, 중앙 검정 */
+function setState(toBackground){
+  if(toBackground){
+    heroSec.classList.add('blackout');
+    if(heroVid) heroVid.pause();
+    body.classList.add('bg-on','storm');
+    if(bgVid){ try{ bgVid.currentTime = 0; }catch(e){} bgVid.play(); }
+  }else{
+    heroSec.classList.remove('blackout');
+    if(heroVid) heroVid.play();
+    body.classList.remove('bg-on','storm');
+    if(bgVid) bgVid.pause();
   }
+}
 
-  // 1.5초에 1-2-1-2-1-2-1(= 중앙-배경 교차) 플리커
-  function flicker(finalToBackground, totalMs=1500, pattern=[0,1,0,1,0,1,0]){
-    const step = Math.floor(totalMs / pattern.length);
-    let i=0;
-    const tm = setInterval(()=>{
-      setState(Boolean(pattern[i]));
-      i++;
-      if(i >= pattern.length){
-        clearInterval(tm);
-        setState(finalToBackground);
-        storm = finalToBackground;
-      }
-    }, step);
-  }
+/* 스타카토 교차(1.5초 7스텝) */
+function flicker(finalToBackground){
+  const seq = [0,1,0,1,0,1,0]; // 0=center, 1=background
+  const total = 1500, step = Math.floor(total/seq.length);
+  let i=0;
+  const tm = setInterval(()=>{
+    setState(!!seq[i]);
+    if(++i>=seq.length){ clearInterval(tm); setState(finalToBackground); inBackground = finalToBackground; }
+  }, step);
+}
 
-  // 버튼 동작
-  btn.addEventListener('click', ()=>{
-    try{ thunder.currentTime=0; thunder.volume=0.8; thunder.play(); }catch(e){}
-    try{ if(dj){ dj.volume=0.7; dj.currentTime=0; dj.play(); }}catch(e){}
-    const goBg = !storm;        // 토글
-    flicker(goBg, 1500, [0,1,0,1,0,1,0,1]); // 1.5초 / 8스텝
-  });
+/* 쿠폰 버튼 클릭: 사운드 + 스타카토 + DJ 볼륨 70% */
+coupon.addEventListener('click', ()=>{
+  try{ thunder.currentTime=0; thunder.play(); }catch(e){}
+  try{ dj.volume = 0.7; dj.currentTime = 0; dj.play(); }catch(e){}
+  flicker(!inBackground);
+});
 
-  // 초기 상태는 중앙 재생
-  setState(false);
+/* 초기 상태(센터 재생) */
+setState(false);
 </script>
 </body>
 </html>
