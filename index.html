@@ -5,62 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>BET33</title>
 <style>
-  :root { --blue:#4aa0e3; --deep:#2b1e4a; --gold:#ffdf6c; --text:#e9edf3; }
+  :root { --blue:#4aa0e3; --deep:#2b1e4a; --text:#e9edf3; }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;
-    background:#000; /* 전체 블랙 */
+    background:#000;            /* 전체 블랙 */
     color:#fff;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Arial,sans-serif;
   }
 
-  /* 상단 헤더(로고 스트립) */
-  .topbar{
-    background:#1a1a1a;
-    border-bottom:4px solid var(--blue);
+  /* ===== HEADER : 보라 배경 + 파란 띠 + 골드 얇은 하이라이트 + 하늘색 라인 ===== */
+  header.hero-header{
+    background:#231738;         /* 보라 */
+    position:sticky; top:0; z-index:10;
   }
-  .topbar .wrap{
-    max-width:1200px; margin:0 auto; padding:10px 12px;
-    display:flex; align-items:center; gap:14px;
+  header.hero-header::after{    /* 하단 하늘색 라인 */
+    content:"";
+    position:absolute; left:0; right:0; bottom:8px; height:6px;
+    background:#7dd3ff;
   }
-  .brand-img{
-    height:56px; width:auto; display:block; object-fit:contain;
-    filter: drop-shadow(0 2px 0 rgba(0,0,0,.35));
+  .h-wrap{
+    max-width:1200px; margin:0 auto;
+    padding:14px 20px 22px;
+    display:flex; align-items:center; gap:24px;
   }
-  .partner{
-    margin-left:6px;
+
+  /* 로고: 텍스트 버전(이미지 쓰면 아래 .h-logo-img 사용) */
+  .h-logo{
+    display:flex; align-items:baseline; gap:6px;
     font-weight:900; letter-spacing:1px;
-    font-size:22px; color:#b9d6ff;
+    transform:translateY(2px);
   }
+  .h-logo .bet{ font-size:44px; color:#ffe46c; text-shadow:0 2px 0 rgba(0,0,0,.35) }
+  .h-logo .num{ font-size:44px; color:#ffe46c; filter:drop-shadow(0 1px 0 rgba(0,0,0,.35)) }
+  .h-logo-img{ height:56px; width:auto; display:none } /* 이미지 로고 쓸 땐 display:block 로 바꾸고 .h-logo는 지워도 됨 */
 
-  /* 메뉴 스트립(파란바 + 보라보더) */
-  .menubar{
-    background:var(--blue);
-    border-bottom:10px solid var(--deep);
-    box-shadow: inset 0 -2px 0 rgba(255,255,255,.2);
-  }
-  .menubar .wrap{
-    max-width:1200px; margin:0 auto; padding:8px 12px;
-    display:flex; justify-content:center; gap:42px;
-    font-weight:900; color:#0e1330; letter-spacing:.6em;
+  /* 파란 띠 + 골드 하이라이트 */
+  .h-menu{
+    position:relative; flex:1;
+    display:flex; justify-content:flex-end; gap:48px;
+    background:linear-gradient(180deg,#3f6293 0%, #3d5f8f 100%);
+    border-radius:6px;
+    padding:12px 18px;
+    color:#f3f6ff; font-weight:900; letter-spacing:.6em;
     text-shadow:0 1px 0 rgba(255,255,255,.35);
+    overflow:hidden;
   }
-  .menubar span{ white-space:nowrap; }
+  .h-menu::after{ /* 금속(골드) 하이라이트 얇은 띠 */
+    content:"";
+    position:absolute; left:0; right:0; bottom:-8px; height:8px;
+    background:linear-gradient(90deg,
+      #f3f4f8 0%,
+      #e8c93a 22%,
+      #b18b1f 38%,
+      #ffffff 56%,
+      #d1b23a 76%,
+      #e6e1c9 90%, #e6e1c9 100%);
+    border-bottom:1px solid rgba(0,0,0,.25);
+  }
+  .h-menu a{ white-space:nowrap; user-select:none }
+  .h-menu a:hover{ filter:brightness(1.06) }
 
-  /* 오른쪽 가장자리 장식 이미지 */
-  .edge{
-    position:fixed; right:0; top:0; bottom:0; width:min(23vw,310px);
-    background: url("assets/edge.png") center right / cover no-repeat;
-    pointer-events:none; z-index:0;
+  @media (max-width:980px){
+    .h-menu{ gap:28px; letter-spacing:.4em; padding:10px 14px }
+    .h-logo .bet,.h-logo .num{ font-size:36px }
+    .h-logo-img{ height:48px }
+  }
+  @media (max-width:700px){
+    .h-wrap{ gap:14px }
+    .h-menu{ gap:16px; letter-spacing:.22em }
   }
 
-  /* 중앙 영상 카드 */
-  .stage{
+  /* ===== CENTER : 16:9 영상 카드 ===== */
+  main.stage{
     min-height:calc(100vh - 120px);
     display:flex; align-items:center; justify-content:center;
     padding:60px 16px;
-    position:relative; z-index:1; /* edge 아래 깔리지 않게 */
   }
   .video-card{
     width:min(70vw,740px);
@@ -74,44 +95,34 @@
   .video-card video, .video-card img{
     width:100%; height:100%; object-fit:cover; display:block;
   }
-
-  @media (max-width:900px){
-    .menubar .wrap{gap:20px; letter-spacing:.3em}
-    .brand-img{height:48px}
-    .partner{font-size:18px}
-  }
 </style>
 </head>
 <body>
 
-  <!-- 상단 로고 스트립 -->
-  <div class="topbar">
-    <div class="wrap">
-      <!-- 좌측 로고 이미지(캡처 같은 띠형 로고) -->
-      <img class="brand-img" src="assets/logo-strip.png" alt="BET33 로고"/>
-      <div class="partner">비공식 파트너</div>
+  <!-- HEADER -->
+  <header class="hero-header">
+    <div class="h-wrap">
+      <!-- 텍스트 로고(기본) -->
+      <div class="h-logo">
+        <span class="bet">BET</span><span class="num">33</span>
+      </div>
+      <!-- 이미지 로고를 쓰려면 위 .h-logo를 지우고 아래 한 줄에서 display:block 로 바꾸세요.
+      <img class="h-logo-img" style="display:block" src="assets/logo-strip.png" alt="BET33">
+      -->
+
+      <nav class="h-menu" aria-label="main">
+        <a>비 공 식 이 란</a>
+        <a>프 로 모 션</a>
+        <a>문 의</a>
+        <a>멤 버 십</a>
+        <a>가 입</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <!-- 파란 메뉴 바 -->
-  <div class="menubar">
-    <div class="wrap">
-      <span>비&nbsp;공&nbsp;식</span>
-      <span>이&nbsp;란</span>
-      <span>프&nbsp;로&nbsp;모&nbsp;션</span>
-      <span>문&nbsp;의</span>
-      <span>멤&nbsp;버&nbsp;십</span>
-      <span>가&nbsp;입</span>
-    </div>
-  </div>
-
-  <!-- 오른쪽 가장자리 데코 -->
-  <div class="edge"></div>
-
-  <!-- 중앙 16:9 영상 카드 -->
+  <!-- CENTER 16:9 -->
   <main class="stage">
     <div class="video-card">
-      <!-- 없으면 poster만 보여도 됨 -->
       <video autoplay muted loop playsinline poster="assets/center-poster.jpg">
         <source src="assets/center.mp4" type="video/mp4"/>
       </video>
