@@ -276,33 +276,59 @@ window.addEventListener('resize', ()=>{
   }
 });
 
-/* 배경<->중앙 교차 재생 */
-function crossPlay(srcArray, duration=6000){
-  playWithFallback(bgVid, srcArray, {loop:false, muted:true});
-  bg.classList.add('on');
-  centerVid.pause();
-  monitor.classList.add('monitor--off');
+/* 배경<->중앙 교차 재생 (안티페이즈: 중앙과 배경을 교대로 켜고 끄기) */
+function crossPlay(srcArray, opts){
+  const { duration=6000, untilEnd=false } = (opts||{});
 
-  // 엇박 플리커
-  const step = 120;
-  const total = Math.floor(duration/step);
+  // 배경 준비
+  playWithFallback(bgVid, srcArray, {loop:!untilEnd, muted:true});
+  try{ bgVid.currentTime = 0; }catch(e){}
+  try{ bgVid.play().catch(()=>{}); }catch(e){}
+
+  // 중앙은 계속 재생하되, 가시성만 토글(꺼질 때는 검은 화면)
   let i=0;
-  const tm = setInterval(()=>{
-    if(i%2===0){ monitor.classList.add('monitor--off'); }
-    else{ monitor.classList.remove('monitor--off'); }
-    if(++i>=total){ clearInterval(tm); finish(); }
-  }, step);
+  const step = 120;
+  let tm = null;
+  function tick(){
+    // i 짝수: 중앙 ON, 배경 OFF / 홀수: 중앙 OFF(검정), 배경 ON
+    const centerOn = (i % 2 === 0);
+    if(centerOn){
+      monitor.classList.remove('monitor--off'); // 중앙 화면 표시
+      bg.classList.remove('on');                // 배경 숨김(검정)
+    }else{
+      monitor.classList.add('monitor--off');    // 중앙 검정
+      bg.classList.add('on');                   // 배경 표시
+    }
+    i += 1;
+  }
+
+  // 시작 즉시 1틱 적용
+  tick();
+  tm = setInterval(tick, step);
 
   function finish(){
-    bgVid.pause(); bg.classList.remove('on');
+    if(tm){ clearInterval(tm); tm=null; }
+    // 원복: 배경 끄고 중앙 다시 표시
+    bgVid.pause();
+    bg.classList.remove('on');
     monitor.classList.remove('monitor--off');
-    centerVid.currentTime=0; centerVid.play().catch(()=>{});
+    try{ centerVid.currentTime = 0; }catch(e){}
+    centerVid.play().catch(()=>{});
+  }
+
+  if(untilEnd){
+    // 영상이 끝날 때까지 반복
+    const onEnded = ()=>{ bgVid.removeEventListener('ended', onEnded); finish(); };
+    bgVid.addEventListener('ended', onEnded);
+  }else{
+    // duration 동안만 반복
+    setTimeout(finish, duration);
   }
 }
 
 /* 쿠폰/긴급 트리거 */
-document.getElementById('bCoupon').onclick = ()=> crossPlay(['assets/coupon-bg.mp4','assets/쿠폰-bg.mp4'], 6000);
-document.getElementById('bEmergency').onclick = ()=> crossPlay(['assets/emergency-bg.mp4'], 6000);
+document.getElementById('bCoupon').onclick = ()=> crossPlay(['assets/coupon-bg.mp4','assets/쿠폰-bg.mp4'], {duration:6000, untilEnd:false});
+document.getElementById('bEmergency').onclick = ()=> crossPlay(['assets/emergency-bg.mp4'], {untilEnd:true});
 
 /* 프로모션: 모니터 off → 확대 → 배너 슬라이드 → 다시 클릭 시 축소 복귀 */
 const promoList = ['assets/PRO1.png','assets/PRO2.png','assets/PRO3.png'];
