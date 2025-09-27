@@ -276,24 +276,24 @@ window.addEventListener('resize', ()=>{
   }
 });
 
-/* 배경<->중앙 교차 재생 (안티페이즈: 중앙과 배경을 교대로 켜고 끄기) */
+/* 배경<->중앙 교차 재생 (안티페이즈 + canplay 이후 시작) */
 function crossPlay(srcArray, opts){
   const { duration=6000, untilEnd=false } = (opts||{});
 
   // 배경 준비
   playWithFallback(bgVid, srcArray, {loop:!untilEnd, muted:true});
   try{ bgVid.currentTime = 0; }catch(e){}
-  try{ bgVid.play().catch(()=>{}); }catch(e){}
 
-  // 중앙은 계속 재생하되, 가시성만 토글(꺼질 때는 검은 화면)
-  let i=0;
-  const step = 120;
+  // 중앙은 계속 재생(일시정지하지 않음). 화면만 토글로 검정/표시.
+  let started = false;
   let tm = null;
+  const step = 120;
+  let i = 0;
+
   function tick(){
-    // i 짝수: 중앙 ON, 배경 OFF / 홀수: 중앙 OFF(검정), 배경 ON
     const centerOn = (i % 2 === 0);
     if(centerOn){
-      monitor.classList.remove('monitor--off'); // 중앙 화면 표시
+      monitor.classList.remove('monitor--off'); // 중앙 표시
       bg.classList.remove('on');                // 배경 숨김(검정)
     }else{
       monitor.classList.add('monitor--off');    // 중앙 검정
@@ -302,28 +302,39 @@ function crossPlay(srcArray, opts){
     i += 1;
   }
 
-  // 시작 즉시 1틱 적용
-  tick();
-  tm = setInterval(tick, step);
+  function startSequence(){
+    if(started) return;
+    started = True
+    // 재생 시도
+    try{ bgVid.play().catch(()=>{}); }catch(e){}
+    // 첫 틱 즉시
+    tick();
+    tm = setInterval(tick, step);
 
-  function finish(){
-    if(tm){ clearInterval(tm); tm=null; }
-    // 원복: 배경 끄고 중앙 다시 표시
-    bgVid.pause();
-    bg.classList.remove('on');
-    monitor.classList.remove('monitor--off');
-    try{ centerVid.currentTime = 0; }catch(e){}
-    centerVid.play().catch(()=>{});
+    function finish(){
+      if(tm){ clearInterval(tm); tm=null; }
+      // 원복
+      bgVid.pause();
+      bg.classList.remove('on');
+      monitor.classList.remove('monitor--off');
+      try{ centerVid.currentTime = 0; }catch(e){}
+      centerVid.play().catch(()=>{});
+    }
+
+    if(untilEnd){
+      const onEnded = ()=>{ bgVid.removeEventListener('ended', onEnded); finish(); };
+      bgVid.addEventListener('ended', onEnded);
+    }else{
+      setTimeout(finish, duration);
+    }
   }
 
-  if(untilEnd){
-    // 영상이 끝날 때까지 반복
-    const onEnded = ()=>{ bgVid.removeEventListener('ended', onEnded); finish(); };
-    bgVid.addEventListener('ended', onEnded);
-  }else{
-    // duration 동안만 반복
-    setTimeout(finish, duration);
-  }
+  // canplay 이후 시작 → 실제 프레임이 준비된 뒤 교차
+  const onCan = ()=>{ bgVid.removeEventListener('canplay', onCan); startSequence(); };
+  bgVid.addEventListener('canplay', onCan);
+
+  // 안전장치: 800ms 내에 canplay가 안 오면 그냥 시작
+  setTimeout(()=>{ if(!started) startSequence(); }, 800);
 }
 
 /* 쿠폰/긴급 트리거 */
