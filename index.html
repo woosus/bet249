@@ -5,147 +5,159 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>BET33</title>
 
-<!-- 헤더/로고용 웹폰트 -->
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  /* 한글 굵은 헤더용 폰트 */
-  @font-face{
-    font-family:'GmarketSansBold';
-    src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
-    font-weight:700; font-style:normal; font-display:swap;
-  }
-
   :root{
-    --deep:#231738;        /* 헤더 보라 */
-    --sky:#67c7ff;         /* 하늘색 라인 */
-    --menublue1:#3f6293;   /* 메뉴 그라데이션 */
-    --menublue2:#3d5f8f;
-
-    --menuW: 720px;        /* 메뉴바 고정 폭 */
-    --logoSize: 44px;      /* BET 33 크기 */
-    --menuLetter: .48em;   /* 메뉴 자간 */
+    --maxw: 1200px;
+    --glass: rgba(255,255,255,.75);
+    --line: rgba(0,0,0,.08);
+    --text: #111;
+    --radius: 16px;
+    --sky: #67c7ff;
   }
-
   *{box-sizing:border-box}
-  html,body{height:100%}
   body{
-    margin:0; background:#000; color:#fff;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial,sans-serif;
+    margin:0; color:var(--text);
+    background: linear-gradient(135deg,#ffffff 0%,#f8fbff 50%,#f3f8ff 100%);
+    font-family: "Pretendard", system-ui, -apple-system, "Noto Sans KR", Arial, sans-serif;
+    min-height:100vh; transition: background .35s ease, color .35s ease;
   }
+  /* 다크(배경 영상) 상태 */
+  body.storm{ background:#06080f; color:#e8ecf3; }
 
-  /* ===== HEADER ===== */
-  .BET-header{
-    background:var(--deep);
-    position:sticky; top:0; z-index:50;
-    border-bottom:6px solid var(--sky);
-  }
-  .BET-header .H-wrap{
-    max-width:1240px; margin:0 auto; padding:10px 14px 18px; position:relative;
-  }
-  .H-top{ display:flex; align-items:flex-start; gap:16px; position:relative; }
+  /* Header */
+  header{ position:sticky; top:0; z-index:20; background:var(--glass);
+          border-bottom:1px solid var(--line); backdrop-filter: blur(12px); }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:14px 20px; display:flex; gap:16px; align-items:center; }
+  .brand{ font-weight:800; font-size:28px; letter-spacing:.6px }
+  nav{ margin-left:auto; display:flex; gap:18px; font-weight:700; opacity:.7 }
 
-  /* 왼쪽 로고(텍스트) */
-  .LOGO{
-    font-family:'Bebas Neue', system-ui, sans-serif;
-    font-size:var(--logoSize); line-height:1;
-    font-weight:900; letter-spacing:.02em;
-    color:#ffe46c; text-shadow:0 2px 0 rgba(0,0,0,.35);
-    display:flex; align-items:center; gap:.12em;
-    user-select:none;
-  }
-  .LOGO .bet{ transform:translateY(2px) }
+  /* Hero section */
+  main{ max-width:var(--maxw); margin:24px auto 80px; padding:0 20px; display:grid; gap:24px; }
+  .hero{ position:relative; border-radius:var(--radius); border:1px solid var(--line);
+         background:var(--glass); box-shadow:0 8px 30px rgba(0,0,0,.08); padding:22px; }
+  .frame{ width:min(75vw,900px); margin:0 auto; border-radius:14px; overflow:hidden;
+          box-shadow:0 10px 28px rgba(0,0,0,.25); background:#000; }
+  /* 16:9 보장 */
+  .frame > .ratio{ position:relative; width:100%; padding-top:56.25%; }
+  .frame video, .frame img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .hero.blackout .frame{ background:#000; }
+  .hero.blackout video{ opacity:0 }
 
-  /* 가운데 둥근 파란 메뉴바(고정 길이) */
-  .MENUBAR{
-    margin-top:6px;
-    width:var(--menuW); height:38px;
-    background:linear-gradient(var(--menublue1), var(--menublue2));
-    border-radius:10px; border:1px solid rgba(255,255,255,.25);
-    box-shadow: inset 0 6px 10px rgba(0,0,0,.15);
-    display:flex; align-items:center; justify-content:center;
-    position:absolute; left:50%; transform:translateX(-50%);
-    color:#eef4ff; font-weight:900;
-    font-family:'GmarketSansBold', system-ui, sans-serif;
-    letter-spacing:var(--menuLetter);
-    text-shadow:0 1px 0 rgba(255,255,255,.35);
-    overflow:hidden; user-select:none;
+  /* 쿠폰 버튼 */
+  .cta{ display:flex; justify-content:center; margin-top:16px }
+  .coupon{
+    appearance:none; border:0; cursor:pointer; font-weight:800;
+    padding:14px 24px; border-radius:12px; font-size:18px;
+    color:#fff; background:#3b82f6; box-shadow:0 8px 20px rgba(59,130,246,.35);
+    transition:transform .08s ease, box-shadow .2s ease, background .2s ease;
   }
-  /* 상단 금속 얇은 하이라이트 */
-  .MENUBAR::before{
-    content:"";
-    position:absolute; left:0; right:0; top:-8px; height:8px;
-    background:linear-gradient(90deg,#f7f7f9 0%, #f6dd66 24%, #b8932e 45%, #ffffff 62%, #f6dd66 80%, #efe6c9 100%);
-    border-top:1px solid rgba(255,255,255,.3);
-  }
+  .coupon:hover{ transform:translateY(-1px); background:#2f74ea }
+  .coupon:active{ transform:translateY(1px); box-shadow:0 4px 12px rgba(59,130,246,.35) }
 
-  /* 아래 파란 스트립(비공식 파트너) */
-  .STRIP{
-    margin-top:18px; height:26px; background:#2a5f8f;
-    border-top:6px solid var(--sky);
-    display:flex; align-items:center; padding-left:8px;
-    font-family:'Bebas Neue', system-ui, sans-serif;
-    color:#bce6ff; font-size:26px; letter-spacing:.06em;
-    text-shadow:0 2px 0 rgba(0,0,0,.4);
-    user-select:none;
-  }
+  /* 카드 3개 (하단) */
+  .row{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+  .card{ background:var(--glass); border:1px solid var(--line); border-radius:var(--radius);
+         padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.07); backdrop-filter: blur(10px); }
+  .card h3{ margin:0 0 8px; font-size:18px }
 
-  /* ===== 중앙 16:9 카드 ===== */
-  .stage{
-    min-height:calc(100vh - 150px);
-    display:flex; align-items:center; justify-content:center;
-    padding:60px 12px;
-  }
-  .card{
-    width:min(70vw,740px);
-    aspect-ratio:16/9;
-    background:#161616;
-    border-radius:16px;
-    border:4px solid #fff;
-    box-shadow:0 16px 40px rgba(0,0,0,.75);
-    overflow:hidden;
-  }
-  .card video,.card img{ width:100%; height:100%; object-fit:cover; display:block; }
+  /* 배경 비디오 (storm 모드에서만 보임) */
+  .bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover;
+             opacity:0; transition:opacity .15s linear; z-index:-1; pointer-events:none; }
+  body.bg-on .bg-video{ opacity:1; z-index:0 }
 
   /* 반응형 */
-  @media (max-width:1024px){
-    :root{ --menuW: 640px; --menuLetter:.38em; --logoSize: 40px; }
-  }
-  @media (max-width:820px){
-    :root{ --menuW: 520px; --menuLetter:.28em; --logoSize: 36px; }
-  }
-  @media (max-width:640px){
-    :root{ --menuW: 360px; --menuLetter:.16em; --logoSize: 32px; }
-  }
+  @media (max-width:900px){ .frame{ width:92% } .row{ grid-template-columns:1fr } }
 </style>
 </head>
 <body>
+  <!-- 배경 영상 -->
+  <video id="bgVid" class="bg-video" muted playsinline loop poster="assets/bg-poster.jpg">
+    <source src="assets/bg.mp4" type="video/mp4"/>
+  </video>
 
-  <!-- 헤더 -->
-  <header class="BET-header">
-    <div class="H-wrap">
-      <div class="H-top">
-        <div class="LOGO">
-          <span class="bet">BET</span>&nbsp;<span class="num">33</span>
-        </div>
+  <!-- 효과음 -->
+  <audio id="thunder" src="assets/thunder.wav" preload="auto"></audio>
+  <audio id="dj" src="assets/dj.mp3" preload="auto"></audio>
 
-        <div class="MENUBAR">
-          비 공 식 이 란 &nbsp;&nbsp; 프 로 모 션 &nbsp;&nbsp; 문 의 &nbsp;&nbsp; 멤 버 십 &nbsp;&nbsp; 가 입
-        </div>
-      </div>
-
-      <div class="STRIP">비공식 파트너</div>
+  <header>
+    <div class="wrap">
+      <div class="brand">BET33</div>
+      <nav>히어로 / 이벤트 / 문의</nav>
     </div>
   </header>
 
-  <!-- 중앙 16:9 카드(영상/이미지 넣기) -->
-  <main class="stage">
-    <div class="card">
-      <!-- center.mp4 업로드하면 자동 재생됨. 없으면 회색 박스만 보임 -->
-      <video autoplay muted loop playsinline poster="assets/center-poster.jpg">
-        <source src="assets/center.mp4" type="video/mp4"/>
-      </video>
-    </div>
+  <main>
+    <!-- 히어로(중앙 16:9) -->
+    <section id="hero" class="hero">
+      <div class="frame">
+        <div class="ratio">
+          <video id="heroVid" autoplay muted loop playsinline poster="assets/center-poster.jpg">
+            <source src="assets/center.mp4" type="video/mp4"/>
+          </video>
+        </div>
+      </div>
+      <div class="cta"><button id="couponBtn" class="coupon">쿠폰 받기</button></div>
+    </section>
+
+    <section class="row">
+      <div class="card"><h3>첫충전 보너스</h3><p>첫 입금 이용자를 위한 기본 혜택.</p></div>
+      <div class="card"><h3>재입금 리워드</h3><p>지속 이용자를 위한 리텐션 설계.</p></div>
+      <div class="card"><h3>페이백/최대출금</h3><p>리스크·한도 규정은 사전 고지 기준으로 안내.</p></div>
+    </section>
   </main>
 
+<script>
+  const body = document.body;
+  const hero = document.getElementById('hero');
+  const heroVid = document.getElementById('heroVid');
+  const bgVid   = document.getElementById('bgVid');
+  const thunder = document.getElementById('thunder');
+  const dj      = document.getElementById('dj');
+  const btn     = document.getElementById('couponBtn');
+
+  // 현재 상태: false(중앙 재생) / true(배경 재생)
+  let storm = false;
+
+  function setState(toBackground){
+    if(toBackground){
+      hero.classList.add('blackout');          // 중앙은 검정
+      if(heroVid) heroVid.pause();             // 중앙 비디오는 멈춤
+      body.classList.add('bg-on','storm');     // 다크 + 배경 영상
+      if(bgVid){ try{ bgVid.currentTime=0; }catch(e){} bgVid.play(); }
+    }else{
+      hero.classList.remove('blackout');
+      if(heroVid) heroVid.play();
+      body.classList.remove('bg-on','storm');
+      if(bgVid) bgVid.pause();
+    }
+  }
+
+  // 1.5초에 1-2-1-2-1-2-1(= 중앙-배경 교차) 플리커
+  function flicker(finalToBackground, totalMs=1500, pattern=[0,1,0,1,0,1,0]){
+    const step = Math.floor(totalMs / pattern.length);
+    let i=0;
+    const tm = setInterval(()=>{
+      setState(Boolean(pattern[i]));
+      i++;
+      if(i >= pattern.length){
+        clearInterval(tm);
+        setState(finalToBackground);
+        storm = finalToBackground;
+      }
+    }, step);
+  }
+
+  // 버튼 동작
+  btn.addEventListener('click', ()=>{
+    try{ thunder.currentTime=0; thunder.volume=0.8; thunder.play(); }catch(e){}
+    try{ if(dj){ dj.volume=0.7; dj.currentTime=0; dj.play(); }}catch(e){}
+    const goBg = !storm;        // 토글
+    flicker(goBg, 1500, [0,1,0,1,0,1,0,1]); // 1.5초 / 8스텝
+  });
+
+  // 초기 상태는 중앙 재생
+  setState(false);
+</script>
 </body>
 </html>
